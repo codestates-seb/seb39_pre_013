@@ -1,0 +1,10 @@
+[source,bash]
+----
+$ echo '{
+  "title" : "How to...",
+  "contents" : "I have a..",
+  "tag" : "JAVA"
+}' | http POST 'http://localhost:8080/questions' \
+    'Content-Type:application/json;charset=UTF-8' \
+    'Accept:application/json'
+----

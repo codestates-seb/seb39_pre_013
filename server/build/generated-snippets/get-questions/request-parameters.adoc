@@ -1,0 +1,10 @@
+|===
+|Parameter|Description
+
+|`+page+`
+|페이지
+
+|`+size+`
+|사이즈
+
+|===
