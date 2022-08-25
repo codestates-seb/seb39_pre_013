@@ -1,0 +1,15 @@
+[source,options="nowrap"]
+----
+{
+  "id" : 1,
+  "title" : "How to...",
+  "contents" : "I have a..",
+  "tag" : "JAVA",
+  "view" : 0,
+  "vote" : 0,
+  "user" : {
+    "id" : 1,
+    "name" : "홍길동"
+  }
+}
+----

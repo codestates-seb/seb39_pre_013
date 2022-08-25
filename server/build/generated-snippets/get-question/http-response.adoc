@@ -1,0 +1,19 @@
+[source,http,options="nowrap"]
+----
+HTTP/1.1 200 OK
+Content-Type: application/json
+Content-Length: 188
+
+{
+  "id" : 1,
+  "title" : "How to...",
+  "contents" : "I have a..",
+  "tag" : "JAVASCRIPT",
+  "view" : 0,
+  "vote" : 0,
+  "user" : {
+    "id" : 1,
+    "name" : "홍길동"
+  }
+}
+----
