@@ -7,25 +7,23 @@ import rehypeKatex from 'rehype-katex';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import remarkMath from 'remark-math';
 import 'katex/dist/katex.min.css';
-import { solarizedlight } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-
+// gruvboxDark vscDarkPlus
 export default function Markdown(props) {
-  //   console.log(Parser(props.text).props.children);
   return (
     <Container>
       <ReactMarkdown
         children={props.text}
         components={{
-          // eslint-disable-next-line max-len
           //   eslint-disable-next-line react/no-unstable-nested-components, no-shadow, object-curly-newline
           code({ node, inline, className, children, ...props }) {
             const match = /language-(\w+)/.exec(className || '');
             return !inline && match ? (
               <SyntaxHighlighter
                 children={String(children).replace(/\n$/, '')}
-                style={solarizedlight}
+                style={vscDarkPlus}
                 language={match[1]}
                 PreTag="div"
                 // eslint-disable-next-line react/jsx-props-no-spreading
