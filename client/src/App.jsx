@@ -1,15 +1,22 @@
 import React from 'react';
 import styled from 'styled-components';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import GlobalStyle from './GlobalStyle';
 import AskQuestion from './pages/blxxom/AskQuestion';
+import DetailQuestion from './pages/blxxom/DetailQuestion';
 
 function App() {
   return (
     <>
       <Container className="App">
-        <main>
-          <AskQuestion />
-        </main>
+        <BrowserRouter>
+          <main>
+            <Routes>
+              <Route path="/" element={<AskQuestion />} />
+              <Route path="detail" element={<DetailQuestion />} />
+            </Routes>
+          </main>
+        </BrowserRouter>
       </Container>
       <GlobalStyle />
     </>

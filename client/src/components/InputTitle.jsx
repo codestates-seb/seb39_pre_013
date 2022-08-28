@@ -43,5 +43,6 @@ const Container = styled.section`
     color: hsl(210, 4%, 95%);
     outline: none;
     background-color: hsl(0, 0%, 17.5%);
+    border: 1px solid hsl(210, 5.5%, 43.5%);
   }
 `;

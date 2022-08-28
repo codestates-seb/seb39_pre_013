@@ -51,10 +51,6 @@ const FormContainer = styled.form`
   display: flex;
   flex-direction: column;
   gap: 10px;
-  input {
-    border-radius: 3px;
-    border: 1px solid hsl(210, 5.5%, 43.5%);
-  }
 
   ${InputTitle} {
     margin-bottom: 10px;
