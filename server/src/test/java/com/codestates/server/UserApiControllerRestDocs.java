@@ -23,6 +23,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
 import org.springframework.http.MediaType;
+import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
@@ -37,6 +38,7 @@ import static com.codestates.server.util.ApiDocumentUtils.getResponsePreProcesso
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -136,7 +138,7 @@ public class UserApiControllerRestDocs {
                                .contentType(MediaType.APPLICATION_JSON)
                                .characterEncoding("UTF-8")
                                .content(content)
-               )
+               );
    }
 
 
@@ -145,12 +147,23 @@ public class UserApiControllerRestDocs {
    @DisplayName("3. [Home][USER-O1-QUE-03] - 질문 상세조회")
    @Test
    void test_3(){
-
+        //질문과
+       //유저와
+       //답변ㄷ
    }
 
    @DisplayName("4. [Question][USER-O1-QUE-06] - 질문을 등록한 유저 정보 조회 ")
    @Test
-   void test_4(){
+   void test_4() throws Exception {
+
+       Long userId = 1L;
+
+       //when
+       ResultActions actions = mockMvc.perform(get("/api/v1/users/{user-id}", userId));
+
+       //then
+       actions.andExpect(status().isOk())
+               .andExpect(jso)
 
    }
 
