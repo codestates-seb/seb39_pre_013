@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 
 export default function Button(props) {
   // eslint-disable-next-line react/destructuring-assignment
-  return <Container onClick={props.onClickHandler}>{props.children}</Container>;
+  return <Container onClick={props.onClick}>{props.children}</Container>;
 }
 
 const Container = styled.button`

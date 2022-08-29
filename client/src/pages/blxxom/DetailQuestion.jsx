@@ -13,7 +13,6 @@ export const dummyData = {
 
   > A block quote with ~strikethrough~ and a URL: https://reactjs.org.
   
-  
   A table:
   
   | a | b |

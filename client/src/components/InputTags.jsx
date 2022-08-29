@@ -6,7 +6,7 @@ import Tags from './UI/Tags';
 export default function InputTags() {
   const [tagList, setTagList] = useState([]);
   const [tagInputValue, setTagInputValue] = useState('');
-  console.log('render');
+
   const tagInputHandler = (e) => {
     const inputValue = e.target.value;
     if (inputValue.includes(' ')) {

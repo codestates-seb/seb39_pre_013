@@ -1,5 +1,5 @@
 import React from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import Editor from '../../components/Editor';
 import InputTags from '../../components/InputTags';
 import InputTitle from '../../components/InputTitle';

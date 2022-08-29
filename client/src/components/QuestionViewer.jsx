@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 // eslint-disable-next-line import/no-cycle
 import { dummyData } from '../pages/blxxom/DetailQuestion';
+import Comments from './Comments';
 import Markdown from './Markdown';
 import QuestionMenu from './QuestionMenu';
 import TagUI from './UI/TagUI';
@@ -16,10 +17,11 @@ export default function QuestionViewer() {
       <Markdown text={dummyData.text} />
       <TagBox>
         {dummyData.tag.map((v) => (
-          <TagUI>{v}</TagUI>
+          <TagUI key={v}>{v}</TagUI>
         ))}
       </TagBox>
       <QuestionMenu />
+      <Comments />
     </Container>
   );
 }
