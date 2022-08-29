@@ -2,8 +2,7 @@ import React from 'react';
 import { Reset } from 'styled-reset';
 
 import styled, { createGlobalStyle } from 'styled-components';
-import Header from './components/Header';
-import Questions from './components/Qustions';
+import Main from './pages/Main';
 
 const GlobalStyles = createGlobalStyle`
   @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
@@ -20,8 +19,7 @@ function App() {
     <div>
       <Reset />
       <GlobalStyles />
-      <Header />
-      <Questions />
+      <Main />
     </div>
   );
 }
