@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -23,11 +24,11 @@ public class UserDto {
     private String twitterLink;
     private String githubLink;
     private String roles;
-    private ArrayList<QuestionDto> questions = new ArrayList<>();
+    private List<QuestionDto> questions = new ArrayList<>();
 
-    private ArrayList<UserTagDto> tags = new ArrayList<>();
+    private List<UserTagDto> tags = new ArrayList<>();
 
-    private ArrayList<AnswerDto> answers = new ArrayList<>();
+    private List<AnswerDto> answers = new ArrayList<>();
 
     @Builder
     public UserDto(Long id, String email, String nickname) {
