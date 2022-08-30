@@ -26,10 +26,10 @@ public class UserTag {
     @JoinColumn(name = "USER_ID")
     private User user;
 
-    public void setUser(User user){
-        this.user = user;
-        if (!this.user.getUserTags().contains(this)) {
-            this.user.getUserTags().add(this);
-        }
-    }
+//    public void setUser(User user){
+//        this.user = user;
+//        if (!this.user.getUserTags().contains(this)) {
+//            this.user.getUserTags().add(this);
+//        }
+//    }
 }

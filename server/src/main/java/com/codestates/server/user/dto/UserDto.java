@@ -2,6 +2,7 @@ package com.codestates.server.user.dto;
 
 import com.codestates.server.answer.dto.AnswerDto;
 import com.codestates.server.question.dto.QuestionDto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -22,7 +23,6 @@ public class UserDto {
     private String twitterLink;
     private String githubLink;
     private String roles;
-    @ToString.Exclude
     private List<QuestionDto> questions = new ArrayList<>();
 
 //    private List<ResponseTagDto> tags = new ArrayList<>();

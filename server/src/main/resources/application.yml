@@ -9,6 +9,7 @@ spring:
     url: jdbc:mysql://localhost:3306/abcd?serverTimezone=Asia/Seoul
     username: root
     password: '@tnqh258'
+    data: data.sql
   jpa:
     hibernate:
       dialect: org.hibernate.dialect.MySQL5InnoDBDialect

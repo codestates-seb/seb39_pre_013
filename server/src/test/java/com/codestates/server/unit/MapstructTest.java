@@ -1,39 +1,35 @@
 package com.codestates.server.unit;
 
 
-import com.codestates.server.user.dto.ResponseTagDto;
-import com.codestates.server.user.dto.UserDto;
-import com.codestates.server.user.dto.UserRequestDto;
+import com.codestates.server.question.entity.Question;
+import com.codestates.server.question.service.QuestionRepository;
 import com.codestates.server.user.entity.User;
 import com.codestates.server.user.mapper.UserMapper;
+import com.codestates.server.user.service.UserService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 
 @SpringBootTest
 public class MapstructTest {
     @Autowired
     private  UserMapper userMapper;
-
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private QuestionRepository questionRepository;
     @DisplayName("1. ")
     @Test
     void test_1(){
-
-        ArrayList<ResponseTagDto> tags = new ArrayList<>(){{
-            add(new ResponseTagDto("java"));
-            add(new ResponseTagDto("javascript"));
-            add(new ResponseTagDto("python"));
-        }};
-        UserRequestDto.signUp requestBody = new UserRequestDto.signUp("kws3363@gmail.com","abcd@efg","김수보",tags);
-        System.out.println(requestBody.toString());
-        UserDto userDto = UserDto.builder().id(1L).email("kws3363@gmail.com").nickname("김수보").build();
-        System.out.println(userMapper.signUpDtoToUserEntity(requestBody));
-        User user = userMapper.signUpDtoToUserEntity(requestBody) ;
+        Optional<User> user = userService.findUser(1L);
+        List<Question> questions =  questionRepository.findByUserId(1L);
         System.out.println(user.toString());
+        questions.stream().forEach(System.out::println);
     }
 
 

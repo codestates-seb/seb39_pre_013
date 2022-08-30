@@ -11,6 +11,7 @@ import java.lang.reflect.Member;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,8 +19,9 @@ public class Question {
 
     private String title;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name = "USER_ID")
+    @ToString.Exclude
     private User user;
 
     public void setUser(User user){

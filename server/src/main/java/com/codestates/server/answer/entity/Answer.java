@@ -21,10 +21,10 @@ public class Answer {
     @JoinColumn(name = "USER_ID")
     private User user;
 
-    public void setUser(User user){
-        this.user = user;
-        if (!this.user.getAnswers().contains(this)){
-            this.user.getAnswers().add(this);
-        }
-    }
+//    public void setUser(User user){
+//        this.user = user;
+//        if (!this.user.getAnswers().contains(this)){
+//            this.user.getAnswers().add(this);
+//        }
+//    }
 }
