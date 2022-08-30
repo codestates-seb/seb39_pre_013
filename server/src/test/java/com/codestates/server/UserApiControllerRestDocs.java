@@ -2,11 +2,10 @@ package com.codestates.server;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.codestates.server.common.dto.ResponseDto;
 import com.codestates.server.user.controller.UserApiContoller;
 import com.codestates.server.user.dto.TagDto;
+import com.codestates.server.user.dto.UserDto;
 import com.codestates.server.user.dto.UserRequestDto;
-import com.codestates.server.user.dto.UserResponseDto;
 import com.codestates.server.user.entity.User;
 import com.codestates.server.user.mapper.UserMapper;
 import com.codestates.server.user.service.UserService;
@@ -23,7 +22,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
 import org.springframework.http.MediaType;
-import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
@@ -74,10 +72,10 @@ public class UserApiControllerRestDocs {
        }};
        UserRequestDto.signUp requestBody = new UserRequestDto.signUp("kws3363@gmail.com","abcd@efg","김수보",tags);
        String content = gson.toJson(requestBody);
-       UserResponseDto userResponseDto = UserResponseDto.builder().id(1L).email("kws3363@gmail.com").nickname("김수보").build();
+       UserDto userDto = UserDto.builder().id(1L).email("kws3363@gmail.com").nickname("김수보").build();
        given(userMapper.signUpDtoToUserEntity(Mockito.any(UserRequestDto.signUp.class))).willReturn(User.builder().build());
        given(userService.createUser(Mockito.any(User.class))).willReturn(User.builder().build());
-       given(userMapper.userEntityToResponseDto(Mockito.any(User.class))).willReturn(userResponseDto);
+       given(userMapper.userEntityToUserDto(Mockito.any(User.class))).willReturn(userDto);
        System.out.println(content.toString());
        //when
        ResultActions actions =
@@ -152,18 +150,13 @@ public class UserApiControllerRestDocs {
        //답변ㄷ
    }
 
+    // 영민님은 컴포넌트별로 드리는게맞는지, 아니면 저는 명세서대로 공통의 생각을 두고
    @DisplayName("4. [Question][USER-O1-QUE-06] - 질문을 등록한 유저 정보 조회 ")
    @Test
    void test_4() throws Exception {
-
        Long userId = 1L;
-
        //when
        ResultActions actions = mockMvc.perform(get("/api/v1/users/{user-id}", userId));
-
-       //then
-       actions.andExpect(status().isOk())
-               .andExpect(jso)
 
    }
 
@@ -174,6 +167,9 @@ public class UserApiControllerRestDocs {
    }
 
 
+
+   //부족한정보로 그분들이 코드를 짜야한다이거죠..(1)
+    // 말로 다 대체를 해야하고.
 
 
 }

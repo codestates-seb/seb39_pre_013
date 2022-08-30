@@ -1,12 +1,11 @@
 package com.codestates.server.user.entity;
 
+import com.codestates.server.answer.entity.Answer;
 import com.codestates.server.common.listener.BaseEntity;
+import com.codestates.server.question.entity.Question;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -20,8 +19,11 @@ public class User extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(nullable = false, updatable = false, unique = true)
     private String email;
+    @Column(nullable = false)
     private String password;
+    @Column(nullable = false, unique = true)
     private String nickname;
     private Long reputation;
     private String title;
@@ -31,11 +33,19 @@ public class User extends BaseEntity {
     private String twitterLink;
     private String githubLink;
     private String roles;
-    private ArrayList<UserTag> tags = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<Question> questions = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<UserTag> userTags = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<Answer> answers = new ArrayList<>();
 
 
     @Builder
-    public User(Long id, String email, String password, String nickname, Long reputation, String title, String aboutMe, String location, String websiteLink, String twitterLink, String githubLink, String roles,ArrayList<UserTag> tags) {
+    public User(Long id, String email, String password, String nickname, Long reputation, String title, String aboutMe, String location, String websiteLink, String twitterLink, String githubLink, String roles, ArrayList<Question> questions, ArrayList<UserTag> userTags, ArrayList<Answer> answers) {
         this.id = id;
         this.email = email;
         this.password = password;
@@ -48,9 +58,12 @@ public class User extends BaseEntity {
         this.twitterLink = twitterLink;
         this.githubLink = githubLink;
         this.roles = roles;
-        this.tags = tags;
-
+        this.questions = questions;
+        this.userTags = userTags;
+        this.answers = answers;
     }
+
+
 
     public List<String> getRoleList() {
         if (this.roles.length() > 0) {

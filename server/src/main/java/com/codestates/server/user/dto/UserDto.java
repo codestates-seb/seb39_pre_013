@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class UserResponseDto {
+public class UserDto {
     private Long id;
     private String email;
     private String nickname;
@@ -30,7 +30,7 @@ public class UserResponseDto {
     private ArrayList<AnswerDto> answers = new ArrayList<>();
 
     @Builder
-    public UserResponseDto(Long id, String email, String nickname) {
+    public UserDto(Long id, String email, String nickname) {
         this.id = id;
         this.email = email;
         this.nickname = nickname;

@@ -4,3 +4,19 @@ spring:
       - naver
       - gmail
       - etc
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/pre13?serverTimezone=Asia/Seoul
+    username: root
+    password: '@tnqh258'
+  jpa:
+    hibernate:
+      dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+      ddl-auto: create
+    show-sql: true
+logging:
+  level:
+    org:
+      springframework:
+        orm:
+          jpa: DEBUG

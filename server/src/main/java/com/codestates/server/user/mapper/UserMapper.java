@@ -1,15 +1,14 @@
 package com.codestates.server.user.mapper;
 
 import com.codestates.server.user.dto.TagDto;
+import com.codestates.server.user.dto.UserDto;
 import com.codestates.server.user.dto.UserRequestDto;
-import com.codestates.server.user.dto.UserResponseDto;
-import com.codestates.server.user.entity.Tag;
+import com.codestates.server.tag.entity.Tag;
 import com.codestates.server.user.entity.User;
 import com.codestates.server.user.entity.UserTag;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 
-import java.util.ArrayList;
+import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface UserMapper {
@@ -18,5 +17,6 @@ public interface UserMapper {
     UserTag tagToDto(TagDto tag);
     Tag userTagToTag(UserTag userTag);
 
-    UserResponseDto userEntityToResponseDto(User user);
+    UserDto userEntityToUserDto(User user);
+    List<UserDto> userListToUserDtoList(List<User> users);
 }
