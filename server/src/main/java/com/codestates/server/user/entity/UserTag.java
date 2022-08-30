@@ -1,10 +1,7 @@
 package com.codestates.server.user.entity;
 
 import com.codestates.server.tag.entity.Tag;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -12,7 +9,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-//@ToString
+@Setter
 public class UserTag {
 
     @Id
@@ -28,4 +25,11 @@ public class UserTag {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID")
     private User user;
+
+    public void setUser(User user){
+        this.user = user;
+        if (!this.user.getUserTags().contains(this)) {
+            this.user.getUserTags().add(this);
+        }
+    }
 }

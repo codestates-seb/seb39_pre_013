@@ -28,6 +28,8 @@ public class UserService {
     }
 
     public Page<User> findUsers(int page, int pageSize) {
+        //유저 태그에 대한 정보를 갖는다.
+
         return userRepository.findAll(PageRequest.of(page, pageSize, Sort.by("id").descending()));
     }
 }

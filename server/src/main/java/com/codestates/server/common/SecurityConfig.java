@@ -33,8 +33,8 @@ public class SecurityConfig {
                 .apply(new CustomDsl())
                 .and()
                 .authorizeRequests()
-                .antMatchers("/api/v1/users/signup").permitAll()
-                .antMatchers("/api/v1/users/**").access("hasRole('ROLE_USER')")
+//                .antMatchers("/api/v1/users/signup").permitAll()
+//                .antMatchers("/api/v1/users/**").access("hasRole('ROLE_USER')")
                 .anyRequest().permitAll()
 
         ;

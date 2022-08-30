@@ -3,7 +3,7 @@ package com.codestates.server;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.codestates.server.user.controller.UserApiContoller;
-import com.codestates.server.user.dto.TagDto;
+import com.codestates.server.user.dto.ResponseTagDto;
 import com.codestates.server.user.dto.UserDto;
 import com.codestates.server.user.dto.UserRequestDto;
 import com.codestates.server.user.entity.User;
@@ -65,10 +65,10 @@ public class UserApiControllerRestDocs {
    @Test
    void test_1() throws Exception {
         //given
-       ArrayList<TagDto> tags = new ArrayList<>(){{
-           add(new TagDto("java"));
-           add(new TagDto("javascript"));
-           add(new TagDto("python"));
+       ArrayList<ResponseTagDto> tags = new ArrayList<>(){{
+           add(new ResponseTagDto("java"));
+           add(new ResponseTagDto("javascript"));
+           add(new ResponseTagDto("python"));
        }};
        UserRequestDto.signUp requestBody = new UserRequestDto.signUp("kws3363@gmail.com","abcd@efg","김수보",tags);
        String content = gson.toJson(requestBody);

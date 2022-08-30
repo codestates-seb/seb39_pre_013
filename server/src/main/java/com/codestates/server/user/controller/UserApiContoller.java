@@ -26,11 +26,14 @@ public class UserApiContoller {
         this.userMapper = userMapper;
         this.userService = userService;
     }
-
+    @GetMapping("/hello")
+    public String hello(){
+        return "hello";
+    }
     //[Signin][COMMON-O1-SINGIN-01] - 회원가입
     @PostMapping("/signup")
     public ResponseEntity<?> signup(@RequestBody UserRequestDto.signUp requestBody){
-        User user = setUser(requestBody);
+        User user = userMapper.signUpDtoToUserEntity(requestBody);
         User createdUser = userService.createUser(user);
         UserDto userDto = userMapper.userEntityToUserDto(createdUser);
         return new ResponseEntity<>(new ResponseDto<>(userDto), HttpStatus.CREATED);
@@ -60,8 +63,4 @@ public class UserApiContoller {
                 ,HttpStatus.OK);
     }
 
-    private User setUser(UserRequestDto.signUp requestBody) {
-        User user = userMapper.signUpDtoToUserEntity(requestBody);
-        return user;
-    }
 }

@@ -13,9 +13,9 @@ public class UserRequestDto {
         private String email;
         private String password;
         private String nickname;
-        private ArrayList<TagDto> tags;
+        private ArrayList<ResponseTagDto> tags;
 
-        public signUp(String email, String password, String nickname, ArrayList<TagDto> tags) {
+        public signUp(String email, String password, String nickname, ArrayList<ResponseTagDto> tags) {
             this.email = email;
             this.password = password;
             this.nickname = nickname;

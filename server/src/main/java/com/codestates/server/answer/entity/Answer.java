@@ -9,7 +9,6 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class Answer {
@@ -21,4 +20,11 @@ public class Answer {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID")
     private User user;
+
+    public void setUser(User user){
+        this.user = user;
+        if (!this.user.getAnswers().contains(this)){
+            this.user.getAnswers().add(this);
+        }
+    }
 }

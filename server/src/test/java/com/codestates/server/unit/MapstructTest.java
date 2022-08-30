@@ -1,7 +1,7 @@
 package com.codestates.server.unit;
 
 
-import com.codestates.server.user.dto.TagDto;
+import com.codestates.server.user.dto.ResponseTagDto;
 import com.codestates.server.user.dto.UserDto;
 import com.codestates.server.user.dto.UserRequestDto;
 import com.codestates.server.user.entity.User;
@@ -23,10 +23,10 @@ public class MapstructTest {
     @Test
     void test_1(){
 
-        ArrayList<TagDto> tags = new ArrayList<>(){{
-            add(new TagDto("java"));
-            add(new TagDto("javascript"));
-            add(new TagDto("python"));
+        ArrayList<ResponseTagDto> tags = new ArrayList<>(){{
+            add(new ResponseTagDto("java"));
+            add(new ResponseTagDto("javascript"));
+            add(new ResponseTagDto("python"));
         }};
         UserRequestDto.signUp requestBody = new UserRequestDto.signUp("kws3363@gmail.com","abcd@efg","김수보",tags);
         System.out.println(requestBody.toString());
