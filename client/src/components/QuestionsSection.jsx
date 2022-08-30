@@ -23,8 +23,6 @@ const StyledMain = styled.div`
       width:80%;
     }
 
-    
-
 
 `;
 
