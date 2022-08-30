@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import UserInfo from './UserInfo';
+import UserInfo from '../Common/UserInfo';
 
 export default function QuestionMenu() {
   return (

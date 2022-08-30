@@ -1,8 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-// eslint-disable-next-line import/no-cycle
-import QuestionViewer from '../../components/QuestionViewer';
-import Vote from '../../components/Vote';
+import QuestionViewer from '../components/QuestionViewer';
+import Vote from '../components/Vote';
 
 export const dummyData = {
   title: 'Sorted function in Python dictionary',

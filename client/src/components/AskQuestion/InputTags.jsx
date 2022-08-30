@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import Tags from './UI/Tags';
+import Tags from './Tags';
 
 export default function InputTags() {
   const [tagList, setTagList] = useState([]);

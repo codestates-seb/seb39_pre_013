@@ -25,6 +25,7 @@
     "remark-math": "^5.1.1",
     "save": "^2.5.0",
     "styled-components": "^5.3.5",
+    "styled-reset": "^4.4.2",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

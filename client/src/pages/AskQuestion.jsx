@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import Editor from '../../components/Editor';
-import InputTags from '../../components/InputTags';
-import InputTitle from '../../components/InputTitle';
-import Button from '../../components/UI/Button';
+import Editor from '../components/AskQuestion/Editor';
+import InputTags from '../components/AskQuestion/InputTags';
+import InputTitle from '../components/AskQuestion/InputTitle';
+import Button from '../components/UI/Button';
 
 export default function AskQuestion() {
   return (
