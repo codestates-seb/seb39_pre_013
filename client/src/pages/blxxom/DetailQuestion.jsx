@@ -46,6 +46,12 @@ export const dummyData = {
   tag: ['python', 'dictionary'],
 };
 
+/**
+ *
+ * @Todo 내부 QuestionHeader 컴포넌트 분리
+ * @Params 질문, 답변에 따른 내부 데이터 변화
+ */
+
 export default function DetailQuestion() {
   return (
     <Container>
