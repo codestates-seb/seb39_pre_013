@@ -1,5 +1,7 @@
 package project.question.controller;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,15 +14,11 @@ import project.question.service.QuestionService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/questions")
+@RequestMapping("/api/v1/questions")
+@RequiredArgsConstructor
 public class QuestionController {
     private final QuestionService questionService;
     private final QuestionMapper questionMapper;
-
-    public QuestionController(QuestionService questionService, QuestionMapper questionMapper) {
-        this.questionService = questionService;
-        this.questionMapper = questionMapper;
-    }
 
     @PostMapping
     public ResponseEntity postQuestion(@RequestBody QuestionPostDto questionPostDto) {
@@ -36,8 +34,6 @@ public class QuestionController {
         return new ResponseEntity<>(questionMapper.questionToQuestionResponseDto(question), HttpStatus.OK);
     }
 
-
-
     @GetMapping("/{question-id}")
     public ResponseEntity getQuestion(@PathVariable("question-id") long questionId) {
         Question question = questionService.findQuestion(questionId);
@@ -47,8 +43,10 @@ public class QuestionController {
     @GetMapping
     public ResponseEntity getQuestions(@RequestParam int page,
                                        @RequestParam int size) {
-        List<Question> questions = questionService.findQuestions(page, size);
-        return new ResponseEntity<>(questionMapper.questionsToQuestionResponseDtos(questions), HttpStatus.OK);
+        Page<Question> questionPage = questionService.findQuestions(page - 1, size);
+        List<Question> questionList = questionPage.getContent();
+
+        return new ResponseEntity<>(questionMapper.questionsToQuestionResponseDtos(questionList), HttpStatus.OK);
     }
 
     @DeleteMapping("/{question-id}")

@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.payload.JsonFieldType;
@@ -17,8 +20,8 @@ import project.question.dto.QuestionPatchDto;
 import project.question.dto.QuestionPostDto;
 import project.question.dto.QuestionResponseDto;
 import project.question.entity.Question;
-import project.question.entity.Tag;
-import project.question.entity.User;
+import project.tag.entity.Tag;
+import project.user.entity.User;
 import project.question.mapper.QuestionMapper;
 import project.question.service.QuestionService;
 
@@ -51,9 +54,9 @@ public class QuestionControllerRestDocs {
 
     @Test
     public void postQuestionTest() throws Exception {
-        QuestionPostDto questionPostDto = new QuestionPostDto("How to...", "I have a..", Tag.JAVA);
+        QuestionPostDto questionPostDto = new QuestionPostDto("How to...", "I have a..", new Tag(2L, "JAVASCRIPT", "javascript is..."));
         String json = gson.toJson(questionPostDto);
-        QuestionResponseDto questionResponseDto = new QuestionResponseDto(1L, "How to...", "I have a..", Tag.JAVA, 0, 0, new User(1L, "홍길동"));
+        QuestionResponseDto questionResponseDto = new QuestionResponseDto(1L, "How to...", "I have a..", new Tag(1L, "JAVASCRIPT", "javascript is..."), 0, 0, new User(1L, "홍길동"));
 
 
         given(questionMapper.questionPostDtoToQuestion(Mockito.any(QuestionPostDto.class))).willReturn(new Question());
@@ -74,16 +77,17 @@ public class QuestionControllerRestDocs {
                         requestFields(
                                 List.of(
                                         fieldWithPath("title").type(JsonFieldType.STRING).description("제목"),
-                                        fieldWithPath("contents").type(JsonFieldType.STRING).description("내용"),
-                                        fieldWithPath("tag").type(JsonFieldType.STRING).description("태그")
+                                        fieldWithPath("content").type(JsonFieldType.STRING).description("내용"),
+                                        fieldWithPath("tag").type(JsonFieldType.OBJECT).description("태그")
                                 )
                         ),
                         responseFields(
                                 List.of(
                                         fieldWithPath("id").type(JsonFieldType.NUMBER).description("질문 식별자"),
                                         fieldWithPath("title").type(JsonFieldType.STRING).description("제목"),
-                                        fieldWithPath("contents").type(JsonFieldType.STRING).description("내용"),
-                                        fieldWithPath("tag").type(JsonFieldType.STRING).description("태그"),
+                                        fieldWithPath("content").type(JsonFieldType.STRING).description("내용"),
+                                        fieldWithPath("tag").type(JsonFieldType.OBJECT).description("태그"),
+                                        fieldWithPath("tag.id").type(JsonFieldType.NUMBER).description("식별자"),
                                         fieldWithPath("view").type(JsonFieldType.NUMBER).description("조회"),
                                         fieldWithPath("vote").type(JsonFieldType.NUMBER).description("추천"),
                                         fieldWithPath("user").type(JsonFieldType.OBJECT).description("작성자"),
@@ -97,9 +101,9 @@ public class QuestionControllerRestDocs {
     @Test
     public void patchQuestionTest() throws Exception {
         long questionId = 1L;
-        QuestionPatchDto questionPatchDto = new QuestionPatchDto(questionId, "How to...", "I have a..", Tag.JAVASCRIPT);
+        QuestionPatchDto questionPatchDto = new QuestionPatchDto(questionId, "How to...", "I have a..", new Tag(1L, "JAVASCRIPT", "javascript is..."));
         String json = gson.toJson(questionPatchDto);
-        QuestionResponseDto questionResponseDto = new QuestionResponseDto(questionId, "How to...", "I have a..", Tag.JAVASCRIPT, 0, 0, new User(1L, "홍길동"));
+        QuestionResponseDto questionResponseDto = new QuestionResponseDto(questionId, "How to...", "I have a..", new Tag(1L, "JAVASCRIPT", "javascript is..."), 0, 0, new User(1L, "홍길동"));
 
         given(questionMapper.questionPatchDtoToQuestion(Mockito.any(QuestionPatchDto.class))).willReturn(new Question());
         given(questionService.updateQuestion(Mockito.any(Question.class))).willReturn(new Question());
@@ -124,7 +128,7 @@ public class QuestionControllerRestDocs {
                                 List.of(
                                         fieldWithPath("id").type(JsonFieldType.NUMBER).description("질문 식별자").ignored(),
                                         fieldWithPath("title").type(JsonFieldType.STRING).description("제목").optional(),
-                                        fieldWithPath("contents").type(JsonFieldType.STRING).description("내용").optional(),
+                                        fieldWithPath("content").type(JsonFieldType.STRING).description("내용").optional(),
                                         fieldWithPath("tag").type(JsonFieldType.STRING).description("태그").optional()
                                 )
                         ),
@@ -132,7 +136,7 @@ public class QuestionControllerRestDocs {
                                 List.of(
                                         fieldWithPath("id").type(JsonFieldType.NUMBER).description("질문 식별자"),
                                         fieldWithPath("title").type(JsonFieldType.STRING).description("제목"),
-                                        fieldWithPath("contents").type(JsonFieldType.STRING).description("내용"),
+                                        fieldWithPath("content").type(JsonFieldType.STRING).description("내용"),
                                         fieldWithPath("tag").type(JsonFieldType.STRING).description("태그"),
                                         fieldWithPath("view").type(JsonFieldType.NUMBER).description("조회"),
                                         fieldWithPath("vote").type(JsonFieldType.NUMBER).description("추천"),
@@ -148,7 +152,7 @@ public class QuestionControllerRestDocs {
     @Test
     public void getQuestionTest() throws Exception {
         long questionId = 1;
-        QuestionResponseDto questionResponseDto = new QuestionResponseDto(questionId, "How to...", "I have a..", Tag.JAVASCRIPT, 0, 0, new User(1L, "홍길동"));
+        QuestionResponseDto questionResponseDto = new QuestionResponseDto(questionId, "How to...", "I have a..", new Tag(1L, "JAVASCRIPT", "javascript is..."), 0, 0, new User(1L, "홍길동"));
 
         given(questionService.findQuestion(Mockito.anyLong())).willReturn(new Question());
         given(questionMapper.questionToQuestionResponseDto(Mockito.any(Question.class))).willReturn(questionResponseDto);
@@ -171,7 +175,7 @@ public class QuestionControllerRestDocs {
                                 List.of(
                                         fieldWithPath("id").type(JsonFieldType.NUMBER).description("질문 식별자"),
                                         fieldWithPath("title").type(JsonFieldType.STRING).description("제목"),
-                                        fieldWithPath("contents").type(JsonFieldType.STRING).description("내용"),
+                                        fieldWithPath("content").type(JsonFieldType.STRING).description("내용"),
                                         fieldWithPath("tag").type(JsonFieldType.STRING).description("태그"),
                                         fieldWithPath("view").type(JsonFieldType.NUMBER).description("조회"),
                                         fieldWithPath("vote").type(JsonFieldType.NUMBER).description("추천"),
@@ -185,18 +189,19 @@ public class QuestionControllerRestDocs {
 
     @Test
     public void getQuestionsTest() throws Exception {
-        List<Question> questions = List.of(
-                new Question(),
-                new Question()
-        );
+        Question question1 = new Question(1L, "How to...", "I have a..", new Tag(1L, "JAVASCRIPT", "javascript is..."), 0, 0, new User(1L, "홍길동"));
+        Question question2 = new Question(2L, "Can I...", "So I am...", new Tag(2L, "JAVA", "java is..."), 0, 0, new User(2L, "이몽룡"));
+
+        Page<Question> pageQuestions = new PageImpl<>(List.of(question1, question2), PageRequest.of(0, 10), 2);
+
         List<QuestionResponseDto> questionResponseDtos = List.of(
-                new QuestionResponseDto(1L, "How to...", "I have a..", Tag.JAVASCRIPT, 0, 0, new User(1L, "홍길동")),
-                new QuestionResponseDto(2L, "Can I...", "So I am...", Tag.JAVA, 0, 0, new User(2L, "이몽룡"))
+                new QuestionResponseDto(1L, "How to...", "I have a..", new Tag(1L, "JAVASCRIPT", "javascript is..."), 0, 0, new User(1L, "홍길동")),
+                new QuestionResponseDto(2L, "Can I...", "So I am...", new Tag(2L, "JAVA", "java is..."), 0, 0, new User(2L, "이몽룡"))
         );
         int page = 1;
         int size = 1;
 
-        given(questionService.findQuestions(Mockito.anyInt(), Mockito.anyInt())).willReturn(questions);
+        given(questionService.findQuestions(Mockito.anyInt(), Mockito.anyInt())).willReturn(pageQuestions);
         given(questionMapper.questionsToQuestionResponseDtos(Mockito.anyList())).willReturn(questionResponseDtos);
 
         ResultActions actions = mockMvc.perform(
@@ -220,7 +225,7 @@ public class QuestionControllerRestDocs {
                                 List.of(
                                         fieldWithPath("[].id").type(JsonFieldType.NUMBER).description("질문 식별자"),
                                         fieldWithPath("[].title").type(JsonFieldType.STRING).description("제목"),
-                                        fieldWithPath("[].contents").type(JsonFieldType.STRING).description("내용"),
+                                        fieldWithPath("[].content").type(JsonFieldType.STRING).description("내용"),
                                         fieldWithPath("[].tag").type(JsonFieldType.STRING).description("태그"),
                                         fieldWithPath("[].view").type(JsonFieldType.NUMBER).description("조회"),
                                         fieldWithPath("[].vote").type(JsonFieldType.NUMBER).description("추천"),

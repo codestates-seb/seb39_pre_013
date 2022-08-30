@@ -1,11 +1,10 @@
-package project.question.entity;
+package project.answer.entity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import project.answer.entity.Answer;
 import project.comment.entity.Comment;
-import project.tag.entity.Tag;
+import project.question.entity.Question;
 import project.user.entity.User;
 
 import javax.persistence.*;
@@ -17,34 +16,26 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @Entity
-public class Question {
+public class Answer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Column(nullable = false)
-    private String title;
-
-    @Column(nullable = false)
     private String content;
 
-    private int view;
-
-    private int vote;
+    @ManyToOne
+    @JoinColumn(name = "QUESTION_ID")
+    private Question question;
 
     @ManyToOne
     @JoinColumn(name = "USER_ID")
     private User user;
 
-    @OneToMany(mappedBy = "question")
-    private List<Tag> tags = new ArrayList<>();
-
-    @OneToMany(mappedBy = "question")
+    @OneToMany(mappedBy = "answer")
     private List<Comment> comments = new ArrayList<>();
 
-    @OneToMany(mappedBy = "question")
-    private List<Answer> answers = new ArrayList<>();
-
+    private int recommendation;
     private LocalDateTime createdAt = LocalDateTime.now();
     private LocalDateTime modifiedAt = LocalDateTime.now();
 }

@@ -1,19 +1,17 @@
-package project.question.dto;
+package project.comment.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import project.tag.entity.Tag;
+
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @AllArgsConstructor
-public class QuestionResponseDto {
+public class CommentResponseDto {
     private long id;
-    private String title;
     private String content;
-    private Tag tag;
-    private int view;
-    private int vote;
 //    private User user;
+    private LocalDateTime modifiedAt;
 }

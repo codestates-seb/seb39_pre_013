@@ -3,13 +3,15 @@ package project.question.dto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import project.question.entity.Tag;
+import project.tag.entity.Tag;
+
+import java.util.List;
 
 @Getter
 @Setter
 @AllArgsConstructor
 public class QuestionPostDto {
     private String title;
-    private String contents;
-    private Tag tag;
+    private String content;
+    private List<Tag> tags;
 }
