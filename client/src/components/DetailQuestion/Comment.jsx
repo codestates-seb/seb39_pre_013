@@ -3,8 +3,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { IoPencilSharp } from 'react-icons/io5';
-import Markdown from './Markdown';
-import Button from './UI/Button';
+import Markdown from '../AskQuestion/Markdown';
+import Button from '../UI/Button';
 
 export default function Comment(props) {
   const [isEdit, setIsEdit] = useState(false);
