@@ -1,4 +1,6 @@
+/* eslint-disable react/destructuring-assignment */
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const QuestionBlockDiv = styled.div`
@@ -41,19 +43,22 @@ const QuestionBlockDiv = styled.div`
   }
 `;
 
-function QuestionBlock() {
+function QuestionBlock(props) {
   return (
     <QuestionBlockDiv>
       <div className="questionsList__left">
-        <div>votes</div>
-        <div>answers</div>
-        <div>views</div>
+        <div>{props.score}</div>
+        <div>{props.answers}</div>
+        <div>{props.views}</div>
       </div>
       <div className="questionsList__right">
-        <div>제목</div>
+        <Link to={`question/${props.id}`}>{props.title}</Link>
         <div className="tagBox">
-          <div>tag1</div>
-          <div>tag2</div>
+          {props.tags.map((v) => (
+            <div key={v}>{v}</div>
+          ))}
+          {/* <div>tag1</div>
+          <div>tag2</div> */}
         </div>
         <div>유저정보/작성시간/메타정보</div>
       </div>

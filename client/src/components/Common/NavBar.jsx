@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 const Bar = styled.div`
@@ -20,14 +20,11 @@ const Bar = styled.div`
 `;
 
 function NavBar() {
-  const navigate = useNavigate();
   return (
     <Bar>
-      <button type="button" onClick={() => navigate('/')}>
-        Questions
-      </button>
+      <Link to="/">Questions</Link>
       <div>Tags</div>
-      <div>Users</div>
+      <Link to="/users">Users</Link>
     </Bar>
   );
 }

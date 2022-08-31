@@ -1,8 +1,14 @@
+/* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import styled from 'styled-components';
 import UserInfo from '../Common/UserInfo';
 
-export default function QuestionMenu() {
+/**
+ *
+ * @Todo redux || recoil 사용으로 전역 데이터 관리 필요
+ */
+
+export default function QuestionMenu(props) {
   return (
     <Container>
       <div>
@@ -10,7 +16,7 @@ export default function QuestionMenu() {
         <button type="button">Edit</button>
         <button type="button">Follow</button>
       </div>
-      <UserInfo />
+      <UserInfo info={props.owner} />
     </Container>
   );
 }

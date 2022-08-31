@@ -1,7 +1,13 @@
+/* eslint-disable function-paren-newline */
+import axios from 'axios';
 import React from 'react';
+import { useQuery } from 'react-query';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import QuestionViewer from '../components/QuestionViewer';
-import Vote from '../components/Vote';
+import Loading from '../components/Common/Loading';
+// eslint-disable-next-line import/no-cycle
+import QuestionViewer from '../components/DetailQuestion/QuestionViewer';
+import Vote from '../components/DetailQuestion/Vote';
 
 export const dummyData = {
   title: 'Sorted function in Python dictionary',
@@ -52,10 +58,31 @@ export const dummyData = {
  */
 
 export default function DetailQuestion() {
+  const params = useParams();
+  const getDetailQuestion = async () => {
+    const { data } = await axios.get(
+      `https://api.stackexchange.com/2.3/questions/${params.id}?page=1&pagesize=1&order=desc&sort=activity&site=stackoverflow&filter=!*MZqiH2Uet7YhfzI`,
+    );
+
+    return data;
+  };
+
+  const { isLoading, data, error, isFetching } = useQuery(
+    'getDetailQuestion',
+    getDetailQuestion,
+    { refetchOnWindowFocus: false },
+  );
+
+  if (isFetching) {
+    return <Loading />;
+  }
+
+  console.log(data);
+
   return (
     <Container>
       <QuestionHeader>
-        <h1>{dummyData.title}</h1>
+        <h1>{data.items[0].title}</h1>
         <div>
           <SubText>
             <span>Asked</span>
@@ -67,13 +94,17 @@ export default function DetailQuestion() {
           </SubText>
           <SubText>
             <span>Viewed</span>
-            {dummyData.viewed} times
+            {data.items[0].view_count} times
           </SubText>
         </div>
       </QuestionHeader>
       <QuestionBody>
         <Vote />
-        <QuestionViewer />
+        <QuestionViewer
+          mdText={data.items[0].body_markdown}
+          tags={data.items[0].tags}
+          owner={data.items[0].owner}
+        />
       </QuestionBody>
     </Container>
   );

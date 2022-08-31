@@ -1,9 +1,10 @@
+/* eslint-disable react/destructuring-assignment */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
 import styled from 'styled-components';
 import { VscCircleFilled } from 'react-icons/vsc';
 
-export default function UserInfo() {
+export default function UserInfo(props) {
   return (
     <Container>
       <div>
@@ -11,16 +12,13 @@ export default function UserInfo() {
       </div>
       <ProfileBox>
         <a href="#">
-          <img
-            src="https://www.gravatar.com/avatar/411d83357f38f264b78d987f690ab272?s=64&d=identicon&r=PG"
-            alt="profileImg"
-          />
+          <img src={props.info.profile_image} alt="profileImg" />
         </a>
         <div>
-          <a href="#">bloxxom</a>
+          <a href="#">{props.info.display_name}</a>
           <ScoreBox>
-            <span>26.2k</span>
-            <span>
+            <span>{props.info.reputation}</span>
+            {/* <span>
               <VscCircleFilled /> 4
             </span>
             <span>
@@ -30,7 +28,7 @@ export default function UserInfo() {
             <span>
               <VscCircleFilled />
               27
-            </span>
+            </span> */}
           </ScoreBox>
         </div>
       </ProfileBox>
