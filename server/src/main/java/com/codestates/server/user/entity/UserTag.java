@@ -6,10 +6,10 @@ import lombok.*;
 import javax.persistence.*;
 
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Setter
 public class UserTag {
 
     @Id
@@ -19,17 +19,26 @@ public class UserTag {
 
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "TAG_ID")
-    private Tag tag;
-
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID")
     private User user;
 
-//    public void setUser(User user){
-//        this.user = user;
-//        if (!this.user.getUserTags().contains(this)) {
-//            this.user.getUserTags().add(this);
-//        }
-//    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "TAG_ID")
+    private Tag tag;
+
+
+
+    public void setUser(User user){
+        this.user = user;
+        if (!this.user.getUserTags().contains(this)) {
+            this.user.getUserTags().add(this);
+        }
+    }
+
+    public void setTag(Tag tag){
+        this.tag = tag;
+        if (this.tag.getUserTags().contains(this)) {
+            this.tag.getUserTags().add(this);
+        }
+    }
 }

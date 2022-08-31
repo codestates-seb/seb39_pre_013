@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -27,7 +28,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     @Value("jwt.secret.key")
-    private String key;
+    private String KEY;
     private final AuthenticationManager authenticationManager;
 
     @Override
@@ -36,7 +37,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             User user = objectMapper.readValue(request.getInputStream(),User.class);
-            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user.getNickname(), user.getPassword());
+            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword());
             Authentication authentication = authenticationManager.authenticate(authenticationToken);
             PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
             return authentication;
@@ -52,19 +53,25 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         PrincipalDetails principalDetails = (PrincipalDetails) authResult.getPrincipal();
         log.info("해당유저는"+ principalDetails.getUsername());
 
-        String jwtToken = JWT.create()
-                .withSubject(principalDetails.getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis() + (60*1000*30)))
-                .withClaim("id",principalDetails.getUser().getId())
-                .withClaim("nickname",principalDetails.getUser().getNickname())
-                .sign(Algorithm.HMAC512(key));
+        String accessToken = createAccessToken(principalDetails, 30);
+        String refreshToken = createAccessToken(principalDetails, 600);
 
-        returnResponseEntity(response, jwtToken);
+        returnResponseEntity(response, accessToken, refreshToken);
     }
 
-    private static void returnResponseEntity(HttpServletResponse response, String jwtToken) throws IOException {
-        response.addHeader("Authorization","Bearer " + jwtToken);
+    private String createAccessToken(PrincipalDetails principalDetails, int x) {
+        String accessToken = JWT.create()
+                .withSubject(principalDetails.getUsername())
+                .withExpiresAt(new Date(System.currentTimeMillis() + (60*1000* x)))
+                .withClaim("id", principalDetails.getUser().getId())
+                .withClaim("nickname", principalDetails.getUser().getNickname())
+                .sign(Algorithm.HMAC512(KEY));
+        return accessToken;
+    }
 
+    private void returnResponseEntity(HttpServletResponse response, String accessToken, String refreshToken) throws IOException {
+        response.addHeader("accessToken","Bearer " + accessToken);
+        response.addHeader("refreshToken", "Bearer " + refreshToken);
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         Map<String, Object> body = new LinkedHashMap<>();

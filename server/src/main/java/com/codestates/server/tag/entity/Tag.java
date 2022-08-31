@@ -23,7 +23,10 @@ public class Tag {
     @OneToMany(mappedBy = "tag")
     private List<UserTag> userTags;
 
-    @ManyToOne
-    @JoinColumn(name = "USER_ID")
-    private User user;
+    public void addUserTag(UserTag userTag){
+        userTags.add(userTag);
+        if (userTag.getTag()!=this){
+            userTag.setTag(this);
+        }
+    }
 }

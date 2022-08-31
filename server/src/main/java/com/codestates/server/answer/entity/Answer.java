@@ -11,6 +11,7 @@ import javax.persistence.*;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class Answer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,12 +20,13 @@ public class Answer {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID")
+    @ToString.Exclude
     private User user;
 
-//    public void setUser(User user){
-//        this.user = user;
-//        if (!this.user.getAnswers().contains(this)){
-//            this.user.getAnswers().add(this);
-//        }
-//    }
+    public void setUser(User user){
+        this.user = user;
+        if (!this.user.getAnswers().contains(this)){
+            this.user.getAnswers().add(this);
+        }
+    }
 }

@@ -23,7 +23,7 @@ import java.io.IOException;
 @Slf4j
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
     @Value("jwt.secret.key")
-    private String key;
+    private String KEY;
     private final UserRepository userRepository;
 
     public JwtAuthorizationFilter(AuthenticationManager authenticationManager,UserRepository userRepository) {
@@ -34,13 +34,13 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
         log.info("인증이나 권한이 필요한 주소 요청됨");
-        String jwtHeader = request.getHeader("Authorization");
+        String jwtHeader = request.getHeader("access_token");
         if (jwtHeader == null || !jwtHeader.startsWith("Bearer")) {
             chain.doFilter(request,response);
             return;
         }
         String jwtToken = jwtHeader.replace("Bearer ","");
-        String username = JWT.require(Algorithm.HMAC512(key)).build().verify(jwtToken).getClaim("sub").asString();
+        String username = JWT.require(Algorithm.HMAC512(KEY)).build().verify(jwtToken).getClaim("sub").asString();
         if (username != null){
             User user = userRepository.findByEmail(username).orElseThrow(()->new UsernameNotFoundException("잘못된 토큰입니다."));
             PrincipalDetails principalDetails = new PrincipalDetails(user);

@@ -36,9 +36,9 @@ public class UserApiContoller {
     //[Signin][COMMON-O1-SINGIN-01] - 회원가입
     @PostMapping("/signup")
     public ResponseEntity<?> signup(@RequestBody UserRequestDto.signUp requestBody){
-        User user = userMapper.signUpDtoToUserEntity(requestBody);
+        User user = userMapper.signUpDtoToUser(requestBody);
         User createdUser = userService.createUser(user);
-        UserDto userDto = userMapper.userEntityToUserDto(createdUser);
+        UserDto userDto = userMapper.userToUserDto(createdUser);
         return new ResponseEntity<>(new ResponseDto<>(userDto), HttpStatus.CREATED);
     }
     //[Login][COMMON-O1-LOGIN-01] - 이메일 로그인
@@ -47,8 +47,9 @@ public class UserApiContoller {
     //[Question][USER-O1-QUE-06] - 질문을 등록한 유저 정보 조회
     @GetMapping("/{user-id}")
     public ResponseEntity<?> getUser(@PathVariable("user-id") Long userId){
+        //유저아이디가 아니라 -> 토큰에서 가져와야함
         User findUser = userService.findUser(userId).orElseThrow();
-        UserDto userDto = userMapper.userEntityToUserDto(findUser);
+        UserDto userDto = userMapper.userToUserDto(findUser);
 
         return new ResponseEntity<>(new ResponseDto<>(userDto)
                 ,HttpStatus.OK);
@@ -60,8 +61,8 @@ public class UserApiContoller {
                                          @Positive @RequestParam("page-size") int pageSize) {
         Page<User> pageUsers = userService.findUsers(page-1,pageSize);
         List<User> users = pageUsers.getContent();
-
-        return new ResponseEntity<>(new MultiResponseDto<>(userMapper.userListToUserDtoList(users)
+        List<UserDto> userDtos = userMapper.userListToUserDtoList(users);
+        return new ResponseEntity<>(new MultiResponseDto<>(userDtos
                 ,pageUsers)
                 ,HttpStatus.OK);
     }

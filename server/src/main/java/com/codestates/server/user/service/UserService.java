@@ -15,7 +15,6 @@ import java.util.Optional;
 public class UserService {
     private final UserRepository userRepository;
 
-
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
@@ -23,6 +22,7 @@ public class UserService {
     public User createUser(User user){
         return userRepository.save(user);
     }
+
     public Optional<User> findUser(Long userId){
         return userRepository.findById(userId);
     }
@@ -30,6 +30,6 @@ public class UserService {
     public Page<User> findUsers(int page, int pageSize) {
         //유저 태그에 대한 정보를 갖는다.
 
-        return userRepository.findAll(PageRequest.of(page, pageSize, Sort.by("id").descending()));
+        return userRepository.findAll(PageRequest.of(page, pageSize, Sort.by("id").ascending()));
     }
 }

@@ -34,35 +34,34 @@ public class User extends BaseEntity {
     private String githubLink;
     private String roles;
 
-    @ToString.Exclude
     @OneToMany(mappedBy = "user")
     private List<Question> questions = new ArrayList<>();
 
-//    @OneToMany(mappedBy = "user")
-//    private List<UserTag> userTags = new ArrayList<>();
-//
-//    @OneToMany(mappedBy = "user")
-//    private List<Answer> answers = new ArrayList<>();
+    @OneToMany(mappedBy = "user")
+    private List<UserTag> userTags = new ArrayList<>();
 
-//    public void addQuestion(Question question){
-//        questions.add(question);
-//        if (question.getUser() != this){
-//            question.setUser(this);
-//        }
-//    }
+    @OneToMany(mappedBy = "user")
+    private List<Answer> answers = new ArrayList<>();
 
-//    public void addUserTag(UserTag userTag){
-//        userTags.add(userTag);
-//        if (userTag.getUser() != this){
-//            userTag.setUser(this);
-//        }
-//    }
-//    public void addAnswer(Answer answer){
-//        answers.add(answer);
-//        if (answer.getUser()!=this){
-//            answer.setUser(this);
-//        }
-//    }
+    public void addQuestion(Question question){
+        questions.add(question);
+        if (question.getUser() != this){
+            question.setUser(this);
+        }
+    }
+
+    public void addUserTag(UserTag userTag){
+        userTags.add(userTag);
+        if (userTag.getUser() != this){
+            userTag.setUser(this);
+        }
+    }
+    public void addAnswer(Answer answer){
+        answers.add(answer);
+        if (answer.getUser()!=this){
+            answer.setUser(this);
+        }
+    }
     @Builder
     public User(Long id, String email, String password, String nickname, Long reputation, String title, String aboutMe, String location, String websiteLink, String twitterLink, String githubLink, String roles, ArrayList<Question> questions, ArrayList<UserTag> userTags, ArrayList<Answer> answers) {
         this.id = id;
@@ -78,8 +77,8 @@ public class User extends BaseEntity {
         this.githubLink = githubLink;
         this.roles = roles;
         this.questions = questions;
-//        this.userTags = userTags;
-//        this.answers = answers;
+        this.userTags = userTags;
+        this.answers = answers;
     }
 
 

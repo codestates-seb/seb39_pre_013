@@ -17,20 +17,5 @@ import java.util.Optional;
 
 @SpringBootTest
 public class MapstructTest {
-    @Autowired
-    private  UserMapper userMapper;
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private QuestionRepository questionRepository;
-    @DisplayName("1. ")
-    @Test
-    void test_1(){
-        Optional<User> user = userService.findUser(1L);
-        List<Question> questions =  questionRepository.findByUserId(1L);
-        System.out.println(user.toString());
-        questions.stream().forEach(System.out::println);
-    }
-
 
 }

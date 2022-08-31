@@ -12,11 +12,8 @@ import java.util.List;
 @Mapper(componentModel = "spring" )
 public interface QuestionMapper {
 
-    @Named("QuestionIgnoreUser")
-    @Mapping(target = "user",ignore = true)
     QuestionDto questionToQuestionDto(Question question);
 
-    @IterableMapping(qualifiedByName = "QuestionIgnoreUser")
     List<QuestionDto> questionListToQuestionDtos(List<Question> questions);
 }
 
