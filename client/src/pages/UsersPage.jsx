@@ -37,6 +37,7 @@ export default function UsersPage() {
 }
 
 const Container = styled.section`
+  padding: 1.4rem;
   display: flex;
   gap: 3rem;
   justify-content: flex-start;

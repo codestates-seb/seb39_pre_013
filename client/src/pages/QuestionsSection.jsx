@@ -11,14 +11,21 @@ const StyledMain = styled.div`
   background-color: #2d2d2d;
   display: flex;
   justify-content: center;
-  border: 5px solid white;
   box-sizing: border-box;
   width: 100%;
+<<<<<<< HEAD
   height: 300vh;
 
   .mainContentsBox {
     width: 70%;
     border: 2px solid red;
+=======
+  height: 100%;
+  padding: 24px;
+
+  .mainContentsBox {
+    width: 100%;
+>>>>>>> 65a26914e544a3fc0fd55007397cfddbcfe243bf
     display: flex;
   }
 

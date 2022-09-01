@@ -41,6 +41,13 @@ function App() {
 const Container = styled.div`
   display: flex;
   justify-content: center;
+<<<<<<< HEAD
+=======
+  margin: auto;
+  max-width: 1280px;
+  position: relative;
+
+>>>>>>> 65a26914e544a3fc0fd55007397cfddbcfe243bf
   main {
     width: 100%;
   }
