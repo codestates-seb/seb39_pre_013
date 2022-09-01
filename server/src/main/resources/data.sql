@@ -28,9 +28,15 @@ insert into user (`email`,`nickname`,`password`,`created_at`,`modified_at`) valu
 insert into user (`email`,`nickname`,`password`,`created_at`,`modified_at`) value ('25@gasdf.com','y','dsfa',now(),now() );
 
 insert into question(`id`,`title`,`user_id`) value('1','자바어려워요','1');
+insert into question(`id`,`title`,`user_id`) value('2','자바어려워요2','1');
+insert into question(`id`,`title`,`user_id`) value('3','자바어려워요3','1');
+insert into question(`id`,`title`,`user_id`) value('4','자바어려워요4','1');
 
 insert into answer(`id`,`content`,`user_id`) value('1','그렇게 하는거 아닌데....','1');
 insert into answer(`id`,`content`,`user_id`) value('2','그렇게 하는거 맞는데....','1');
 
 insert into tag(`id`,`name`,`description`) value('1','java','자바어쩌구저쩌구');
 insert into user_tag(`id`,`name`,`tag_id`,`user_id`) value (1,'java',1,1);
+
+insert into subscribe(id, user_id,question_id,answer_id) value ('1','1','1','1');
+insert into subscribe(id, user_id,question_id,answer_id) value ('2','1','3','1');

@@ -3,6 +3,7 @@ package com.codestates.server.user.entity;
 import com.codestates.server.answer.entity.Answer;
 import com.codestates.server.common.listener.BaseEntity;
 import com.codestates.server.question.entity.Question;
+import com.codestates.server.subscribe.entity.Subscribe;
 import lombok.*;
 
 import javax.persistence.*;
@@ -43,6 +44,9 @@ public class User extends BaseEntity {
     @OneToMany(mappedBy = "user")
     private List<Answer> answers = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user")
+    private List<Subscribe> subscribes = new ArrayList<>();
+
     public void addQuestion(Question question){
         questions.add(question);
         if (question.getUser() != this){
@@ -62,8 +66,8 @@ public class User extends BaseEntity {
             answer.setUser(this);
         }
     }
-    @Builder
-    public User(Long id, String email, String password, String nickname, Long reputation, String title, String aboutMe, String location, String websiteLink, String twitterLink, String githubLink, String roles, ArrayList<Question> questions, ArrayList<UserTag> userTags, ArrayList<Answer> answers) {
+
+    public User(Long id, String email, String password, String nickname, Long reputation, String title, String aboutMe, String location, String websiteLink, String twitterLink, String githubLink, String roles, List<Question> questions, List<UserTag> userTags, List<Answer> answers, List<Subscribe> subscribes) {
         this.id = id;
         this.email = email;
         this.password = password;
@@ -79,7 +83,11 @@ public class User extends BaseEntity {
         this.questions = questions;
         this.userTags = userTags;
         this.answers = answers;
+        this.subscribes = subscribes;
     }
+
+    @Builder
+
 
 
 

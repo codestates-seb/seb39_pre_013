@@ -4,6 +4,7 @@ import com.codestates.server.common.filter.JwtAuthenticationFilter;
 import com.codestates.server.common.filter.JwtAuthorizationFilter;
 import com.codestates.server.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,6 +20,8 @@ import org.springframework.web.filter.CorsFilter;
 @EnableWebSecurity(debug = true)
 @RequiredArgsConstructor
 public class SecurityConfig {
+    @Value("${jwt.secret.key}")
+    private String JWT_KEY;
     private final CorsFilter corsFilter;
     private final UserRepository userRepository;
 
@@ -33,7 +36,8 @@ public class SecurityConfig {
                 .apply(new CustomDsl())
                 .and()
                 .authorizeRequests()
-                .antMatchers("/api/v1/users/signup").permitAll()
+                .antMatchers("/api/v1/users/login").permitAll()
+                .antMatchers("/api/v1/users/signup","/api/v1/users/refresh").permitAll()
 //                .antMatchers("/api/v1/users/**").access("hasRole('ROLE_USER')")
                 .anyRequest().permitAll()
 
@@ -47,11 +51,11 @@ public class SecurityConfig {
             AuthenticationManager authenticationManager = builder.getSharedObject(AuthenticationManager.class);
             builder.addFilter(corsFilter)
                     .addFilter(getJwtAuthenticationFilter(authenticationManager))
-                    .addFilter(new JwtAuthorizationFilter(authenticationManager, userRepository));
+                    .addFilter(new JwtAuthorizationFilter(authenticationManager, JWT_KEY, userRepository));
         }
 
         private JwtAuthenticationFilter getJwtAuthenticationFilter(AuthenticationManager authenticationManager) {
-            JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager);
+            JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager,JWT_KEY);
             jwtAuthenticationFilter.setFilterProcessesUrl("/api/v1/users/login");
             return jwtAuthenticationFilter;
         }

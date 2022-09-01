@@ -1,15 +1,15 @@
 package com.codestates.server.subscribe.entity;
 
 
+import com.codestates.server.answer.entity.Answer;
+import com.codestates.server.question.entity.Question;
+import com.codestates.server.user.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Getter
 @Setter
@@ -20,4 +20,37 @@ public class Subscribe {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "USER_ID")
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "QUESTION_ID",nullable = true)
+    private Question question;
+
+    @ManyToOne
+    @JoinColumn(name = "ANSWER_ID",nullable = true)
+    private Answer answer;
+
+    public void setQuestion(Question question) {
+        this.question = question;
+        if (!this.question.getSubscribes().contains(this)){
+            this.question.getSubscribes().add(this);
+        }
+    }
+
+    public void setAnswer(Answer answer) {
+        this.answer = answer;
+        if (!this.answer.getSubscribes().contains(this)){
+            this.answer.getSubscribes().add(this);
+        }
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+        if (!this.user.getSubscribes().contains(this)){
+            this.user.getSubscribes().add(this);
+        }
+    }
 }

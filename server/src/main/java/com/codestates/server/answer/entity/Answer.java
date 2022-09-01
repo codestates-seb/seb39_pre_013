@@ -1,9 +1,11 @@
 package com.codestates.server.answer.entity;
 
+import com.codestates.server.subscribe.entity.Subscribe;
 import com.codestates.server.user.entity.User;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 
 @Getter
@@ -22,6 +24,9 @@ public class Answer {
     @JoinColumn(name = "USER_ID")
     @ToString.Exclude
     private User user;
+
+    @OneToMany(mappedBy = "answer")
+    private List<Subscribe> subscribes;
 
     public void setUser(User user){
         this.user = user;

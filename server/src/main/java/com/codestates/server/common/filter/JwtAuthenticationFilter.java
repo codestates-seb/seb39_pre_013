@@ -20,26 +20,25 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 @Slf4j
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
-    @Value("jwt.secret.key")
-    private String KEY;
     private final AuthenticationManager authenticationManager;
+    private final String JWT_KEY;
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         log.info("로그인 요청");
         try {
             ObjectMapper objectMapper = new ObjectMapper();
-            User user = objectMapper.readValue(request.getInputStream(),User.class);
+            User user = objectMapper.readValue(request.getInputStream(), User.class);
+            System.out.println(user.getEmail());
+            System.out.println(user.getPassword());
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword());
             Authentication authentication = authenticationManager.authenticate(authenticationToken);
-            PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
             return authentication;
         } catch (IOException e) {
             e.printStackTrace();
@@ -52,9 +51,9 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         log.info("인증에 성공하였습니다.");
         PrincipalDetails principalDetails = (PrincipalDetails) authResult.getPrincipal();
         log.info("해당유저는"+ principalDetails.getUsername());
-
+        System.out.println(JWT_KEY);
         String accessToken = createAccessToken(principalDetails, 30);
-        String refreshToken = createAccessToken(principalDetails, 600);
+        String refreshToken = createRefreshToken(principalDetails, 600);
 
         returnResponseEntity(response, accessToken, refreshToken);
     }
@@ -65,10 +64,19 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .withExpiresAt(new Date(System.currentTimeMillis() + (60*1000* x)))
                 .withClaim("id", principalDetails.getUser().getId())
                 .withClaim("nickname", principalDetails.getUser().getNickname())
-                .sign(Algorithm.HMAC512(KEY));
+                .sign(Algorithm.HMAC512(JWT_KEY));
         return accessToken;
     }
-
+    private String createRefreshToken(PrincipalDetails principalDetails, int x) {
+        String accessToken = JWT.create()
+                .withSubject("refresh")
+                .withClaim("email",principalDetails.getUsername())
+                .withExpiresAt(new Date(System.currentTimeMillis() + (60*1000* x)))
+                .withClaim("id", principalDetails.getUser().getId())
+                .withClaim("nickname", principalDetails.getUser().getNickname())
+                .sign(Algorithm.HMAC512(JWT_KEY));
+        return accessToken;
+    }
     private void returnResponseEntity(HttpServletResponse response, String accessToken, String refreshToken) throws IOException {
         response.addHeader("accessToken","Bearer " + accessToken);
         response.addHeader("refreshToken", "Bearer " + refreshToken);

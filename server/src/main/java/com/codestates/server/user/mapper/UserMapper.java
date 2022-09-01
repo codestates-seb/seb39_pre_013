@@ -17,13 +17,16 @@ public interface UserMapper {
     @Mappings({
             @Mapping(target = "questions", source = "questions", qualifiedByName = "QuestionDtoToQuestion"),
             @Mapping(target = "userTags", source = "userTags", qualifiedByName = "UserTagDtoToUserTag"),
-            @Mapping(target = "answers", source = "answers", qualifiedByName = "AnswerDtoToAnswer")
+            @Mapping(target = "answers", source = "answers", qualifiedByName = "AnswerDtoToAnswer"),
+            @Mapping(target = "subscribes", ignore = true)
     })
     User userDtoToUser(UserDto userDto);
 
 
     List<User> userDtoListToUserList(List<UserDto> users);
 
+    @Mapping(target = "subscribes", source = "subscribes", qualifiedByName = "SubscribeToSubscribeDto")
     UserDto userToUserDto(User user);
+
     List<UserDto> userListToUserDtoList(List<User> users);
 }
