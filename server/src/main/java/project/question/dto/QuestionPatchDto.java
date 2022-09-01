@@ -3,14 +3,16 @@ package project.question.dto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import project.tag.entity.Tag;
+import project.question.entity.QuestionTag;
+
+import java.util.List;
 
 @Getter
 @Setter
 @AllArgsConstructor
 public class QuestionPatchDto {
-    private long id;
+    private Long id;
     private String title;
     private String content;
-    private Tag tag;
+    private List<QuestionTag> questionTags;
 }

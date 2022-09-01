@@ -3,9 +3,11 @@ package project.tag.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import project.question.entity.Question;
+import project.user.entity.User;
+import project.user.entity.UserTag;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
@@ -14,11 +16,14 @@ import javax.persistence.*;
 public class Tag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-
+    private Long id;
     private String name;
+    private String description;
+
+    @OneToMany(mappedBy = "tag")
+    private List<UserTag> userTags;
 
     @ManyToOne
-    @JoinColumn(name = "QUESTION_ID")
-    private Question question;
+    @JoinColumn(name = "USER_ID")
+    private User user;
 }

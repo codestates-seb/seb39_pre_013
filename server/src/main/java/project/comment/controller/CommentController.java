@@ -10,6 +10,7 @@ import project.comment.dto.CommentPostDto;
 import project.comment.entity.Comment;
 import project.comment.mapper.CommentMapper;
 import project.comment.service.CommentService;
+import project.dto.SingleResponseDto;
 
 @RestController
 @RequestMapping("/api/v1/comments")
@@ -22,7 +23,8 @@ public class CommentController {
     public ResponseEntity createComment(@RequestBody CommentPostDto commentPostDto) {
         Comment comment = commentMapper.commentPostDtoToComment(commentPostDto);
         Comment response = commentService.createComment(comment);
-        return new ResponseEntity<>(commentMapper.commentToCommentResponseDto(response), HttpStatus.CREATED);
+        return new ResponseEntity<>(
+                new SingleResponseDto<>(commentMapper.commentToCommentResponseDto(response)), HttpStatus.CREATED);
     }
 
     @PatchMapping("/{comment-id}")
@@ -31,7 +33,8 @@ public class CommentController {
         commentPatchDto.setId(commentId);
         Comment comment = commentMapper.commentPatchDtoToComment(commentPatchDto);
         Comment response = commentService.updateComment(comment);
-        return new ResponseEntity<>(commentMapper.commentToCommentResponseDto(response), HttpStatus.OK);
+        return new ResponseEntity<>(
+                new SingleResponseDto<>(commentMapper.commentToCommentResponseDto(response)), HttpStatus.OK);
     }
 
     @DeleteMapping("/{comment-id}")

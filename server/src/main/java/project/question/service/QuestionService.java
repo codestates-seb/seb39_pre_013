@@ -1,22 +1,32 @@
 package project.question.service;
 
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import project.question.entity.Question;
 import project.question.repository.QuestionRepository;
+import project.user.entity.User;
+import project.user.repository.UserRepository;
 
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class QuestionService {
     private final QuestionRepository questionRepository;
+    private final UserRepository userRepository;
 
     public Question createQuestion(Question question) {
 
-        return questionRepository.save(question);
+//        User user = userRepository.findById(question.getUser().getId()).get();
+//        question.addUser(user);
+
+        Question savedQuestion = questionRepository.save(question);
+
+
+        return savedQuestion;
     }
 
     public Question updateQuestion(Question question) {

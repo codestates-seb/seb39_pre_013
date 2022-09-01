@@ -1,5 +1,6 @@
 package project.answer.controller;
 
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,19 +10,26 @@ import project.answer.dto.AnswerPostDto;
 import project.answer.entity.Answer;
 import project.answer.mapper.AnswerMapper;
 import project.answer.service.AnswerService;
+import project.dto.SingleResponseDto;
+import project.question.entity.Question;
+import project.question.service.QuestionService;
 
 @RestController
 @RequestMapping("/api/v1/answers")
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class AnswerController {
     private final AnswerService answerService;
     private final AnswerMapper answerMapper;
 
     @PostMapping
     public ResponseEntity postAnswer(@RequestBody AnswerPostDto answerPostDto) {
+        System.out.println("answerPostDto = " + answerPostDto);
         Answer answer = answerMapper.answerPostDtoToAnswer(answerPostDto);
+        System.out.println("answer = " + answer);
         Answer response = answerService.createAnswer(answer);
-        return new ResponseEntity(answerMapper.answerToAnswerResponseDto(response), HttpStatus.CREATED);
+        System.out.println("response = " + response);
+        return new ResponseEntity(
+                new SingleResponseDto<>(answerMapper.answerToAnswerResponseDto(response)), HttpStatus.CREATED);
     }
 
     @PatchMapping("/{answer-id}")
@@ -30,7 +38,8 @@ public class AnswerController {
         answerPatchDto.setId(answerId);
         Answer answer = answerMapper.answerPatchDtoToAnswer(answerPatchDto);
         Answer response = answerService.updateAnswer(answer);
-        return new ResponseEntity<>(answerMapper.answerToAnswerResponseDto(response), HttpStatus.OK);
+        return new ResponseEntity<>(
+                new SingleResponseDto<>(answerMapper.answerToAnswerResponseDto(response)), HttpStatus.OK);
     }
 
     @DeleteMapping("/{answer-id}")

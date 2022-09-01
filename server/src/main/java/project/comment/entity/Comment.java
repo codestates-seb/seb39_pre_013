@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(nullable = false)
     private String content;
@@ -30,9 +30,23 @@ public class Comment {
     @JoinColumn(name = "QUESTION_ID")
     private Question question;
 
+    public void addQuestion(Question question) {
+        this.question = question;
+        if (!this.question.getComments().contains(this)) {
+            this.question.getComments().add(this);
+        }
+    }
+
     @ManyToOne
     @JoinColumn(name = "ANSWER_ID")
     private Answer answer;
+
+    public void addAnswer(Answer answer) {
+        this.answer = answer;
+        if (!this.answer.getComments().contains(this)) {
+            this.answer.getComments().add(this);
+        }
+    }
 
     private LocalDateTime createdAt = LocalDateTime.now();
     private LocalDateTime modifiedAt = LocalDateTime.now();

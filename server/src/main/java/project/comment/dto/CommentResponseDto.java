@@ -3,6 +3,7 @@ package project.comment.dto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import project.user.dto.UserResponseDto;
 
 import java.time.LocalDateTime;
 
@@ -12,6 +13,6 @@ import java.time.LocalDateTime;
 public class CommentResponseDto {
     private long id;
     private String content;
-//    private User user;
+    private UserResponseDto user;
     private LocalDateTime modifiedAt;
 }

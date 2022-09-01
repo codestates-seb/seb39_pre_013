@@ -1,19 +1,33 @@
 package project.question.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-import project.tag.entity.Tag;
+import project.answer.dto.AnswerResponseDto;
+import project.answer.entity.Answer;
+import project.comment.dto.CommentResponseDto;
+import project.comment.entity.Comment;
+import project.question.entity.QuestionTag;
+import project.user.dto.UserResponseDto;
+import project.user.entity.User;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
 @AllArgsConstructor
+@Data
 public class QuestionResponseDto {
-    private long id;
+    private Long id;
     private String title;
     private String content;
-    private Tag tag;
-    private int view;
-    private int vote;
-//    private User user;
+    private Integer view;
+    private Integer vote;
+    private UserResponseDto user;
+//    private List<QuestionTag> questionTags;
+//    private List<CommentResponseDto> comments;
+    private List<AnswerResponseDto> answers;
+    private LocalDateTime modifiedAt;
 }

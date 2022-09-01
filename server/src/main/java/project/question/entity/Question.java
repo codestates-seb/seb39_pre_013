@@ -1,11 +1,14 @@
 package project.question.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import project.answer.entity.Answer;
 import project.comment.entity.Comment;
-import project.tag.entity.Tag;
 import project.user.entity.User;
 
 import javax.persistence.*;
@@ -17,10 +20,11 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @Entity
+@Data
 public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(nullable = false)
     private String title;
@@ -28,16 +32,26 @@ public class Question {
     @Column(nullable = false)
     private String content;
 
-    private int view;
+    private Integer view;
 
-    private int vote;
+    private Integer vote;
 
     @ManyToOne
     @JoinColumn(name = "USER_ID")
+//    @JsonManagedReference
+//    @JsonBackReference
     private User user;
 
+    public void addUser(User user) {
+        this.user = user;
+//        this.user.getQuestions().add(this);
+        if (!this.user.getQuestions().contains(this)) {
+            this.user.getQuestions().add(this);
+        }
+    }
+
     @OneToMany(mappedBy = "question")
-    private List<Tag> tags = new ArrayList<>();
+    private List<QuestionTag> questionTags = new ArrayList<>();
 
     @OneToMany(mappedBy = "question")
     private List<Comment> comments = new ArrayList<>();
