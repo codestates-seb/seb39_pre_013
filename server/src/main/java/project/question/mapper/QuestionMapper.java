@@ -5,6 +5,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import project.answer.dto.AnswerResponseDto;
 import project.answer.entity.Answer;
+import project.comment.dto.CommentResponseDto;
+import project.comment.entity.Comment;
 import project.question.dto.QuestionPatchDto;
 import project.question.dto.QuestionPostDto;
 import project.question.dto.QuestionResponseDto;
@@ -41,4 +43,7 @@ public interface QuestionMapper {
 //
     @InheritInverseConfiguration
     List<AnswerResponseDto> answersToAnswerResponseDtos(List<Answer> answers);
+
+    @InheritInverseConfiguration
+    List<CommentResponseDto> commentToCommentResponseDtos(List<Comment> comments);
 }

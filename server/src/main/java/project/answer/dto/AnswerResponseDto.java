@@ -4,7 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import project.comment.dto.CommentResponseDto;
 import project.user.dto.UserResponseDto;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -15,4 +18,5 @@ public class AnswerResponseDto {
     private String content;
     private int recommendation;
     private UserResponseDto user;
+    private List<CommentResponseDto> comments;
 }

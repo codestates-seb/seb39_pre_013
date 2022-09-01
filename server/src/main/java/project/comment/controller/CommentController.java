@@ -21,8 +21,11 @@ public class CommentController {
 
     @PostMapping
     public ResponseEntity createComment(@RequestBody CommentPostDto commentPostDto) {
+        System.out.println("commentPostDto = " + commentPostDto);
         Comment comment = commentMapper.commentPostDtoToComment(commentPostDto);
+        System.out.println("comment = " + comment);
         Comment response = commentService.createComment(comment);
+        System.out.println("response = " + response);
         return new ResponseEntity<>(
                 new SingleResponseDto<>(commentMapper.commentToCommentResponseDto(response)), HttpStatus.CREATED);
     }

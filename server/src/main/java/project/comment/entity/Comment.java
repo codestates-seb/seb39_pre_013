@@ -1,5 +1,6 @@
 package project.comment.entity;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,6 +15,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @Entity
+@Data
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,12 +43,12 @@ public class Comment {
     @JoinColumn(name = "ANSWER_ID")
     private Answer answer;
 
-    public void addAnswer(Answer answer) {
-        this.answer = answer;
-        if (!this.answer.getComments().contains(this)) {
-            this.answer.getComments().add(this);
-        }
-    }
+//    public void addAnswer(Answer answer) {
+//        this.answer = answer;
+//        if (!this.answer.getComments().contains(this)) {
+//            this.answer.getComments().add(this);
+//        }
+//    }
 
     private LocalDateTime createdAt = LocalDateTime.now();
     private LocalDateTime modifiedAt = LocalDateTime.now();

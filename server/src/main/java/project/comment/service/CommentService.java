@@ -13,6 +13,10 @@ public class CommentService {
     private final CommentRepository commentRepository;
 
     public Comment createComment(Comment comment) {
+        //todo mapstruct 에서 제외 시키는 방법 검색
+        if (comment.getAnswer().getId() == null) comment.setAnswer(null);
+        if (comment.getQuestion().getId() == null) comment.setQuestion(null);
+
         return commentRepository.save(comment);
     }
 

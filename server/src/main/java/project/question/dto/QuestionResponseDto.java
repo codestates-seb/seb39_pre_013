@@ -27,7 +27,7 @@ public class QuestionResponseDto {
     private Integer vote;
     private UserResponseDto user;
 //    private List<QuestionTag> questionTags;
-//    private List<CommentResponseDto> comments;
+    private List<CommentResponseDto> comments;
     private List<AnswerResponseDto> answers;
     private LocalDateTime modifiedAt;
 }

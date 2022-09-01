@@ -14,6 +14,6 @@ spring:
       ddl-auto: create
     show-sql: true
     defer-datasource-initialization: true
-  jackson:
-    serialization:
-      FAIL_ON_EMPTY_BEANS: false
+#  jackson:
+#    serialization:
+#      FAIL_ON_EMPTY_BEANS: false

@@ -23,11 +23,8 @@ public class AnswerController {
 
     @PostMapping
     public ResponseEntity postAnswer(@RequestBody AnswerPostDto answerPostDto) {
-        System.out.println("answerPostDto = " + answerPostDto);
         Answer answer = answerMapper.answerPostDtoToAnswer(answerPostDto);
-        System.out.println("answer = " + answer);
         Answer response = answerService.createAnswer(answer);
-        System.out.println("response = " + response);
         return new ResponseEntity(
                 new SingleResponseDto<>(answerMapper.answerToAnswerResponseDto(response)), HttpStatus.CREATED);
     }
