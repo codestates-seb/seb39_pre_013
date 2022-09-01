@@ -10,7 +10,9 @@ import project.comment.entity.Comment;
 import project.question.dto.QuestionPatchDto;
 import project.question.dto.QuestionPostDto;
 import project.question.dto.QuestionResponseDto;
+import project.question.dto.QuestionTagResponseDto;
 import project.question.entity.Question;
+import project.question.entity.QuestionTag;
 import project.user.dto.UserResponseDto;
 import project.user.entity.User;
 
@@ -46,4 +48,7 @@ public interface QuestionMapper {
 
     @InheritInverseConfiguration
     List<CommentResponseDto> commentToCommentResponseDtos(List<Comment> comments);
+
+    @InheritInverseConfiguration
+    List<QuestionTagResponseDto> questionTagsToQuestionTagResponseDtos(List<QuestionTag> questionTags);
 }

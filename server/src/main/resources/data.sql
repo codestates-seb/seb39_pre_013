@@ -25,3 +25,21 @@ INSERT INTO ANSWER(content, recommendation, question_id, user_id) VALUES
 INSERT INTO COMMENT(content, question_id, answer_id, user_id, modified_at) VALUES
 ('Beyond that, you may need to close the websocket on a background thread.', 1, null, 2, CURRENT_TIMESTAMP),
 ('onPause/onStop is called without an issue in the Application class.', null, 1, 3, CURRENT_TIMESTAMP);
+
+INSERT INTO QUESTION_TAG(name, question_id) VALUES
+('java', 1),
+('websocket', 1),
+('typescript', 2),
+('recursion', 2),
+('recursive-datastructures', 2),
+('react-native', 3),
+('apple-m1', 3),
+('flipper', 3),
+('visual-studio', 4),
+('shortcut', 4),
+('inline-hints', 4),
+('sql', 5),
+('sql-server', 5),
+('tsql', 5),
+('stored-procedures', 5),
+('many-to-many', 5);

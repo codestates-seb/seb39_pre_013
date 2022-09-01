@@ -5,12 +5,8 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import project.answer.dto.AnswerResponseDto;
-import project.answer.entity.Answer;
 import project.comment.dto.CommentResponseDto;
-import project.comment.entity.Comment;
-import project.question.entity.QuestionTag;
 import project.user.dto.UserResponseDto;
-import project.user.entity.User;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -26,7 +22,7 @@ public class QuestionResponseDto {
     private Integer view;
     private Integer vote;
     private UserResponseDto user;
-//    private List<QuestionTag> questionTags;
+    private List<QuestionTagResponseDto> questionTags;
     private List<CommentResponseDto> comments;
     private List<AnswerResponseDto> answers;
     private LocalDateTime modifiedAt;
