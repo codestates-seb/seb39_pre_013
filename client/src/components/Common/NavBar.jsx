@@ -2,29 +2,47 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-const Bar = styled.div`
-  border: 2px solid blue;
+const Bar = styled.nav`
   display: flex;
   flex-direction: column;
-  width: 20%;
+  width: 165px;
+  position: relative;
+  border-right: 1px solid hsl(210, 4.5%, 30.5%);
 
-  div {
+  a {
     color: white;
-    width: 100%;
     display: flex;
-    justify-content: center;
-    font-size: 1.5rem;
+    justify-content: flex-start;
+    font-size: 13px;
     margin: 0.6rem 0;
     cursor: pointer;
+    text-decoration: none;
+    padding: 10px 6px;
   }
+`;
+
+const NavMenu = styled.div`
+  padding-top: 30px;
+  position: sticky;
+  top: 50px;
+`;
+
+const NavLink = styled(Link)`
+  border-right: 3px solid #ffa500;
+  background-color: transparent;
+  background-color: ${(props) => props.active && '#3d3d3d'};
 `;
 
 function NavBar() {
   return (
     <Bar>
-      <Link to="/">Questions</Link>
-      <div>Tags</div>
-      <Link to="/users">Users</Link>
+      <NavMenu>
+        <NavLink to="/" active>
+          Questions
+        </NavLink>
+        <Link to="/">Tags</Link>
+        <Link to="/users">Users</Link>
+      </NavMenu>
     </Bar>
   );
 }

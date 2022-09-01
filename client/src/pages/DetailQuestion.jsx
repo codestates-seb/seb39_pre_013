@@ -77,8 +77,6 @@ export default function DetailQuestion() {
     return <Loading />;
   }
 
-  console.log(data);
-
   return (
     <Container>
       <QuestionHeader>

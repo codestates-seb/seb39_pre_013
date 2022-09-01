@@ -40,6 +40,10 @@ function App() {
 
 const Container = styled.div`
   display: flex;
+  justify-content: center;
+  margin: auto;
+  max-width: 1280px;
+  position: relative;
 
   main {
     width: 100%;
