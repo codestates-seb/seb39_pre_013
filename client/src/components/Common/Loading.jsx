@@ -1,11 +1,11 @@
 import React from 'react';
-import ClipLoader from 'react-spinners/ClipLoader';
+import ScaleLoader from 'react-spinners/ScaleLoader';
 import styled from 'styled-components';
 
 export default function Loading() {
   return (
     <Container>
-      <ClipLoader size={300} />
+      <ScaleLoader color="#fff" />
     </Container>
   );
 }

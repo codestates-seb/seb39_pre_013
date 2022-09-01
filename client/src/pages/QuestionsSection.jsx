@@ -3,7 +3,6 @@ import React from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import { useQuery } from 'react-query';
-import NavBar from '../components/Common/NavBar';
 import QuestionBoxHeader from '../components/Main/QuestionBoxHeader';
 import QuestionBlock from '../components/Main/QuestionBlock';
 import Loading from '../components/Common/Loading';
