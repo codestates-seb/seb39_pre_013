@@ -14,10 +14,10 @@ const StyledMain = styled.div`
   border: 5px solid white;
   box-sizing: border-box;
   width: 100%;
-  height: 100vh;
+  height: 300vh;
 
   .mainContentsBox {
-    width: 100%;
+    width: 70%;
     border: 2px solid red;
     display: flex;
   }
@@ -36,7 +36,6 @@ const StyledNavdiv = styled.div`
   margin: 0.6rem 0;
   cursor: pointer;
 `;
-
 function QuestionsSection() {
   const getQuestions = async () => {
     const { data } = await axios.get(

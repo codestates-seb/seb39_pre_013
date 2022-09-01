@@ -45,7 +45,7 @@ const StyledHeader = styled.header`
   }
 `;
 
-const LogoLink = styled(Link)`
+const LogoLink = styled.a`
   color: white;
   text-decoration: none;
   display: inline-block;

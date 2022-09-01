@@ -8,7 +8,7 @@ const Bar = styled.div`
   flex-direction: column;
   width: 20%;
 
-  div {
+  a {
     color: white;
     width: 100%;
     display: flex;
@@ -23,7 +23,7 @@ function NavBar() {
   return (
     <Bar>
       <Link to="/">Questions</Link>
-      <div>Tags</div>
+      <Link to="/">Tags</Link>
       <Link to="/users">Users</Link>
     </Bar>
   );
