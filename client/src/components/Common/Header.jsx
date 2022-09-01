@@ -76,7 +76,7 @@ const StyledHeader = styled.header`
   }
 `;
 
-const LogoLink = styled.a`
+const LogoLink = styled(Link)`
   color: white;
   text-decoration: none;
   display: inline-block;

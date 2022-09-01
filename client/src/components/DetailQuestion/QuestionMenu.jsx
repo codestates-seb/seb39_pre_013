@@ -24,6 +24,7 @@ export default function QuestionMenu(props) {
 const Container = styled.div`
   display: flex;
   justify-content: space-between;
+  margin: 1rem 0;
   button {
     margin-right: 8px;
     background-color: transparent;

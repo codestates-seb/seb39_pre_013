@@ -1,11 +1,15 @@
+/* eslint-disable array-callback-return */
+/* eslint-disable import/no-cycle */
+/* eslint-disable jsx-a11y/control-has-associated-label */
+/* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable function-paren-newline */
 import axios from 'axios';
 import React from 'react';
-import { useQuery } from 'react-query';
+import { useQueries, useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import Loading from '../components/Common/Loading';
-// eslint-disable-next-line import/no-cycle
+import Answers from '../components/DetailQuestion/Answers';
 import QuestionViewer from '../components/DetailQuestion/QuestionViewer';
 import Vote from '../components/DetailQuestion/Vote';
 
@@ -61,53 +65,93 @@ export default function DetailQuestion() {
   const params = useParams();
   const getDetailQuestion = async () => {
     const { data } = await axios.get(
-      `https://api.stackexchange.com/2.3/questions/${params.id}?page=1&pagesize=1&order=desc&sort=activity&site=stackoverflow&filter=!*MZqiH2Uet7YhfzI`,
+      `https://api.stackexchange.com/2.3/questions/${params.id}?page=1&pagesize=1&order=desc&sort=activity&site=stackoverflow&filter=!*MZqiH2nLUzaa-7j&key=xvUIc44g5zNOfh7F5nXJig((`,
     );
 
     return data;
   };
 
-  const { isLoading, data, error, isFetching } = useQuery(
-    'getDetailQuestion',
-    getDetailQuestion,
-    { refetchOnWindowFocus: false },
-  );
+  const getAnswers = async () => {
+    const { data } = await axios.get(
+      `https://api.stackexchange.com/2.3/questions/${params.id}/answers?order=desc&sort=activity&site=stackoverflow&filter=!6VvPDzQn3Qm62&key=xvUIc44g5zNOfh7F5nXJig((`,
+    );
 
-  if (isFetching) {
+    return data;
+  };
+
+  const getQuestionsComments = async () => {
+    const { data } = await axios.get(
+      `https://api.stackexchange.com/2.3/questions/${params.id}/comments?order=desc&sort=creation&site=stackoverflow&filter=!nKzQURB(-t&key=xvUIc44g5zNOfh7F5nXJig((`,
+    );
+
+    return data;
+  };
+
+  const result = useQueries([
+    {
+      queryKey: ['getDetaikQuestion'],
+      queryFn: () => getDetailQuestion(),
+      refetchOnWindowFocus: false,
+    },
+    {
+      queryKey: ['getAnswers'],
+      queryFn: () => getAnswers(),
+      refetchOnWindowFocus: false,
+    },
+    {
+      queryKey: ['getQuestionsComments'],
+      queryFn: () => getQuestionsComments(),
+      refetchOnWindowFocus: false,
+    },
+  ]);
+
+  console.log(`id : ${params.id} = `, result[1]);
+  if (result[0].isFetching || result[1].isFetching || result[2].isFetching) {
     return <Loading />;
   }
 
   return (
     <Container>
-      <QuestionHeader>
-        <h1>{data.items[0].title}</h1>
-        <div>
-          <SubText>
-            <span>Asked</span>
-            {dummyData.asked}
-          </SubText>
-          <SubText>
-            <span>Modified</span>
-            {dummyData.modified}
-          </SubText>
-          <SubText>
-            <span>Viewed</span>
-            {data.items[0].view_count} times
-          </SubText>
-        </div>
-      </QuestionHeader>
-      <QuestionBody>
-        <Vote />
-        <QuestionViewer
-          mdText={data.items[0].body_markdown}
-          tags={data.items[0].tags}
-          owner={data.items[0].owner}
-        />
-      </QuestionBody>
+      <div>
+        <QuestionHeader>
+          <h1>{result[0].data.items[0].title}</h1>
+          <div>
+            <SubText>
+              <span>Asked</span>
+              {dummyData.asked}
+            </SubText>
+            <SubText>
+              <span>Modified</span>
+              {dummyData.modified}
+            </SubText>
+            <SubText>
+              <span>Viewed</span>
+              {result[0].data.items[0].view_count} times
+            </SubText>
+          </div>
+        </QuestionHeader>
+        <QuestionBody>
+          <Vote />
+          <QuestionViewer
+            mdText={result[0].data.items[0].body_markdown}
+            tags={result[0].data.items[0].tags}
+            owner={result[0].data.items[0].owner}
+          />
+        </QuestionBody>
+      </div>
+      <AnswerContainer>
+        {result[1].data.items.length !== 0 && (
+          <Answers answerData={result[1].data.items} />
+        )}
+      </AnswerContainer>
     </Container>
   );
 }
 
+// eslint-disable-next-line no-lone-blocks
+{
+  /* <Answers answerData={result[1].data.items} /> */
+}
 const Container = styled.article`
   padding: 24px;
   background-color: hsl(0, 0%, 17.5%);
@@ -143,3 +187,5 @@ const SubText = styled.div`
 const QuestionBody = styled.section`
   display: flex;
 `;
+
+const AnswerContainer = styled.div``;

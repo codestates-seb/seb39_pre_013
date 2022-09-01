@@ -50,4 +50,8 @@ Markdown.propsTypes = {
 
 const Container = styled.div`
   margin-top: 0.5rem;
+
+  img {
+    max-width: 100%;
+  }
 `;

@@ -18,12 +18,10 @@ export default function QuestionViewer(props) {
       {/* <Markdown text={dummyData.text} /> */}
       <Markdown text={props.mdText} />
       <TagBox>
-        {props.tags.map((v) => (
-          <TagUI key={v}>{v}</TagUI>
-        ))}
+        {props.tags && props.tags.map((v) => <TagUI key={v}>{v}</TagUI>)}
       </TagBox>
       <QuestionMenu owner={props.owner} />
-      <Comments />
+      {/* <Comments /> */}
     </Container>
   );
 }

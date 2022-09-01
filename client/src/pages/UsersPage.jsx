@@ -9,7 +9,7 @@ import UserCard from '../components/Users/UserCard';
 export default function UsersPage() {
   const getUsers = async () => {
     const { data } = await axios.get(
-      'https://api.stackexchange.com/2.3/users?page=1&pagesize=40&order=desc&sort=reputation&site=stackoverflow',
+      'https://api.stackexchange.com/2.3/users?page=1&pagesize=40&order=desc&sort=reputation&site=stackoverflow&key=xvUIc44g5zNOfh7F5nXJig((',
     );
     return data;
   };

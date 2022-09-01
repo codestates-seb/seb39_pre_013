@@ -13,19 +13,11 @@ const StyledMain = styled.div`
   justify-content: center;
   box-sizing: border-box;
   width: 100%;
-<<<<<<< HEAD
-  height: 300vh;
-
-  .mainContentsBox {
-    width: 70%;
-    border: 2px solid red;
-=======
   height: 100%;
   padding: 24px;
 
   .mainContentsBox {
     width: 100%;
->>>>>>> 65a26914e544a3fc0fd55007397cfddbcfe243bf
     display: flex;
   }
 
@@ -46,7 +38,7 @@ const StyledNavdiv = styled.div`
 function QuestionsSection() {
   const getQuestions = async () => {
     const { data } = await axios.get(
-      'https://api.stackexchange.com/2.3/questions?page=1&pagesize=10&order=desc&sort=activity&site=stackoverflow&filter=!9Tk7U8l6-',
+      'https://api.stackexchange.com/2.3/questions?page=1&pagesize=10&order=desc&sort=activity&site=stackoverflow&filter=!9Tk7U8l6-&key=xvUIc44g5zNOfh7F5nXJig((',
     );
 
     return data;

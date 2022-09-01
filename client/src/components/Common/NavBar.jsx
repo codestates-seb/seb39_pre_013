@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 const Bar = styled.nav`
@@ -27,28 +27,23 @@ const NavMenu = styled.div`
   top: 50px;
 `;
 
-const NavLink = styled(Link)`
-  border-right: 3px solid #ffa500;
+const NavLinkStyle = styled(NavLink)`
   background-color: transparent;
-  background-color: ${(props) => props.active && '#3d3d3d'};
+
+  &.active {
+    border-right: 3px solid #ffa500;
+    background-color: #3d3d3d;
+  }
 `;
 
 function NavBar() {
   return (
     <Bar>
-<<<<<<< HEAD
-      <Link to="/">Questions</Link>
-      <Link to="/">Tags</Link>
-      <Link to="/users">Users</Link>
-=======
       <NavMenu>
-        <NavLink to="/" active>
-          Questions
-        </NavLink>
-        <Link to="/">Tags</Link>
-        <Link to="/users">Users</Link>
+        <NavLinkStyle to="/">Questions</NavLinkStyle>
+        <NavLinkStyle to="/ae">Tags</NavLinkStyle>
+        <NavLinkStyle to="/users">Users</NavLinkStyle>
       </NavMenu>
->>>>>>> 65a26914e544a3fc0fd55007397cfddbcfe243bf
     </Bar>
   );
 }
