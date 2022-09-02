@@ -1,11 +1,11 @@
-package project.answer.mapper;
+package com.codestates.server.answer.mapper;
 
+import com.codestates.server.answer.entity.Answer;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import project.answer.dto.AnswerPatchDto;
-import project.answer.dto.AnswerPostDto;
-import project.answer.dto.AnswerResponseDto;
-import project.answer.entity.Answer;
+import com.codestates.server.answer.dto.AnswerPatchDto;
+import com.codestates.server.answer.dto.AnswerPostDto;
+import com.codestates.server.answer.dto.AnswerResponseDto;
 
 @Mapper(componentModel = "spring")
 public interface AnswerMapper {

@@ -1,20 +1,22 @@
-package project.comment.entity;
+package com.codestates.server.comment.entity;
 
+import com.codestates.server.answer.entity.Answer;
+import com.codestates.server.common.listener.BaseEntity;
+import com.codestates.server.question.entity.Question;
+import com.codestates.server.user.entity.User;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import project.answer.entity.Answer;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @Entity
 @Data
-public class Comment {
+public class Comment extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -47,7 +49,4 @@ public class Comment {
 //            this.answer.getComments().add(this);
 //        }
 //    }
-
-    private LocalDateTime createdAt = LocalDateTime.now();
-    private LocalDateTime modifiedAt = LocalDateTime.now();
 }

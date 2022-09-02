@@ -28,7 +28,7 @@ import java.util.List;
 @Validated
 @RestController
 @RequestMapping("/api/v1/users")
-public class UserApiContoller {
+public class UserApiController {
     @Value("${jwt.secret.key}")
     private String JWT_KEY;
 
@@ -38,7 +38,7 @@ public class UserApiContoller {
 
     private final BCryptPasswordEncoder passwordEncoder;
 
-    public UserApiContoller(UserMapper userMapper, UserService userService, BCryptPasswordEncoder passwordEncoder) {
+    public UserApiController(UserMapper userMapper, UserService userService, BCryptPasswordEncoder passwordEncoder) {
         this.userMapper = userMapper;
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;

@@ -1,4 +1,4 @@
-package project.question.dto;
+package com.codestates.server.question.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

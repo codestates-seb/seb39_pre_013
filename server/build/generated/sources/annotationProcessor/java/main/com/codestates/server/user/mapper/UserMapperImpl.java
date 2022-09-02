@@ -6,6 +6,8 @@ import com.codestates.server.question.dto.QuestionDto;
 import com.codestates.server.question.entity.Question;
 import com.codestates.server.subscribe.dto.SubscribeDto;
 import com.codestates.server.subscribe.entity.Subscribe;
+import com.codestates.server.tag.dto.TagDto;
+import com.codestates.server.tag.entity.Tag;
 import com.codestates.server.user.dto.UserDto;
 import com.codestates.server.user.dto.UserRequestDto;
 import com.codestates.server.user.dto.UserTagDto;
@@ -19,8 +21,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-09-01T20:56:15+0900",
-    comments = "version: 1.5.2.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-7.4.jar, environment: Java 11.0.10 (Oracle Corporation)"
+    date = "2022-09-02T23:11:14+0900",
+    comments = "version: 1.5.2.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-7.5.jar, environment: Java 11.0.10 (Oracle Corporation)"
 )
 @Component
 public class UserMapperImpl implements UserMapper {
@@ -31,37 +33,59 @@ public class UserMapperImpl implements UserMapper {
     private CustomForDtoMapper customForDtoMapper;
 
     @Override
+    public UserTagDto tagDtoToUserTagDto(TagDto tagDto) {
+        if ( tagDto == null ) {
+            return null;
+        }
+
+        UserTagDto userTagDto = new UserTagDto();
+
+        userTagDto.setName( tagDto.getName() );
+
+        return userTagDto;
+    }
+
+    @Override
+    public UserTag userTagDtoToUserTag(UserTagDto userTagDto) {
+        if ( userTagDto == null ) {
+            return null;
+        }
+
+        UserTag userTag = new UserTag();
+
+        userTag.setName( userTagDto.getName() );
+
+        return userTag;
+    }
+
+    @Override
+    public UserTag tagDtoToUserTag(Tag tag) {
+        if ( tag == null ) {
+            return null;
+        }
+
+        UserTag userTag = new UserTag();
+
+        userTag.setTag( tagToTag( tag ) );
+        userTag.setId( tag.getId() );
+        userTag.setName( tag.getName() );
+
+        return userTag;
+    }
+
+    @Override
     public User signUpDtoToUser(UserRequestDto.signUp dto) {
         if ( dto == null ) {
             return null;
         }
 
-        List<UserTag> userTags = null;
-        String email = null;
-        String password = null;
-        String nickname = null;
+        User.UserBuilder user = User.builder();
 
-        userTags = userTagDtoListToUserTagList( dto.getUserTags() );
-        email = dto.getEmail();
-        password = dto.getPassword();
-        nickname = dto.getNickname();
+        user.email( dto.getEmail() );
+        user.password( dto.getPassword() );
+        user.nickname( dto.getNickname() );
 
-        Long id = null;
-        Long reputation = null;
-        String title = null;
-        String aboutMe = null;
-        String location = null;
-        String websiteLink = null;
-        String twitterLink = null;
-        String githubLink = null;
-        String roles = null;
-        List<Question> questions = null;
-        List<Answer> answers = null;
-        List<Subscribe> subscribes = null;
-
-        User user = new User( id, email, password, nickname, reputation, title, aboutMe, location, websiteLink, twitterLink, githubLink, roles, questions, userTags, answers, subscribes );
-
-        return user;
+        return user.build();
     }
 
     @Override
@@ -70,42 +94,24 @@ public class UserMapperImpl implements UserMapper {
             return null;
         }
 
-        List<Question> questions = null;
-        List<UserTag> userTags = null;
-        List<Answer> answers = null;
-        Long id = null;
-        String email = null;
-        String nickname = null;
-        Long reputation = null;
-        String title = null;
-        String aboutMe = null;
-        String location = null;
-        String websiteLink = null;
-        String twitterLink = null;
-        String githubLink = null;
-        String roles = null;
+        User.UserBuilder user = User.builder();
 
-        questions = questionDtoListToQuestionList( userDto.getQuestions() );
-        userTags = userTagDtoListToUserTagList( userDto.getUserTags() );
-        answers = answerDtoListToAnswerList( userDto.getAnswers() );
-        id = userDto.getId();
-        email = userDto.getEmail();
-        nickname = userDto.getNickname();
-        reputation = userDto.getReputation();
-        title = userDto.getTitle();
-        aboutMe = userDto.getAboutMe();
-        location = userDto.getLocation();
-        websiteLink = userDto.getWebsiteLink();
-        twitterLink = userDto.getTwitterLink();
-        githubLink = userDto.getGithubLink();
-        roles = userDto.getRoles();
+        user.questions( questionDtoListToQuestionList( userDto.getQuestions() ) );
+        user.userTags( userTagDtoListToUserTagList( userDto.getUserTags() ) );
+        user.answers( answerDtoListToAnswerList( userDto.getAnswers() ) );
+        user.id( userDto.getId() );
+        user.email( userDto.getEmail() );
+        user.nickname( userDto.getNickname() );
+        user.reputation( userDto.getReputation() );
+        user.title( userDto.getTitle() );
+        user.aboutMe( userDto.getAboutMe() );
+        user.location( userDto.getLocation() );
+        user.websiteLink( userDto.getWebsiteLink() );
+        user.twitterLink( userDto.getTwitterLink() );
+        user.githubLink( userDto.getGithubLink() );
+        user.roles( userDto.getRoles() );
 
-        List<Subscribe> subscribes = null;
-        String password = null;
-
-        User user = new User( id, email, password, nickname, reputation, title, aboutMe, location, websiteLink, twitterLink, githubLink, roles, questions, userTags, answers, subscribes );
-
-        return user;
+        return user.build();
     }
 
     @Override
@@ -165,17 +171,16 @@ public class UserMapperImpl implements UserMapper {
         return list;
     }
 
-    protected List<UserTag> userTagDtoListToUserTagList(List<UserTagDto> list) {
-        if ( list == null ) {
+    protected Tag tagToTag(Tag tag) {
+        if ( tag == null ) {
             return null;
         }
 
-        List<UserTag> list1 = new ArrayList<UserTag>( list.size() );
-        for ( UserTagDto userTagDto : list ) {
-            list1.add( customForDtoMapper.userTagDtoToUserTag( userTagDto ) );
-        }
+        Tag tag1 = new Tag();
 
-        return list1;
+        tag1.setId( tag.getId() );
+
+        return tag1;
     }
 
     protected List<Question> questionDtoListToQuestionList(List<QuestionDto> list) {
@@ -186,6 +191,19 @@ public class UserMapperImpl implements UserMapper {
         List<Question> list1 = new ArrayList<Question>( list.size() );
         for ( QuestionDto questionDto : list ) {
             list1.add( customForDtoMapper.questionDtoToQuestion( questionDto ) );
+        }
+
+        return list1;
+    }
+
+    protected List<UserTag> userTagDtoListToUserTagList(List<UserTagDto> list) {
+        if ( list == null ) {
+            return null;
+        }
+
+        List<UserTag> list1 = new ArrayList<UserTag>( list.size() );
+        for ( UserTagDto userTagDto : list ) {
+            list1.add( customForDtoMapper.userTagDtoToUserTag( userTagDto ) );
         }
 
         return list1;

@@ -1,16 +1,15 @@
-package project.comment.controller;
+package com.codestates.server.comment.controller;
 
-import lombok.AllArgsConstructor;
+import com.codestates.server.common.dto.SingleResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import project.comment.dto.CommentPatchDto;
-import project.comment.dto.CommentPostDto;
-import project.comment.entity.Comment;
-import project.comment.mapper.CommentMapper;
-import project.comment.service.CommentService;
-import project.dto.SingleResponseDto;
+import com.codestates.server.comment.dto.CommentPatchDto;
+import com.codestates.server.comment.dto.CommentPostDto;
+import com.codestates.server.comment.entity.Comment;
+import com.codestates.server.comment.mapper.CommentMapper;
+import com.codestates.server.comment.service.CommentService;
 
 @RestController
 @RequestMapping("/api/v1/comments")

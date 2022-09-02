@@ -1,5 +1,4 @@
 spring:
-<<<<<<< HEAD
   profiles:
     include:
       - naver
@@ -29,23 +28,4 @@ logging:
           jpa: DEBUG
 server:
   port: 8080
-=======
-  h2:
-    console:
-      enabled: true
-      path: /h2
-  datasource:
-    url: jdbc:h2:mem:test
-    data: data.sql
-  sql:
-    init:
-      mode: always
-  jpa:
-    hibernate:
-      ddl-auto: create
-    show-sql: true
-    defer-datasource-initialization: true
-#  jackson:
-#    serialization:
-#      FAIL_ON_EMPTY_BEANS: false
->>>>>>> clover
+

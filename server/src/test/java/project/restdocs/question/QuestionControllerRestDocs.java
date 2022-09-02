@@ -15,15 +15,15 @@
 //import org.springframework.restdocs.payload.JsonFieldType;
 //import org.springframework.test.web.servlet.MockMvc;
 //import org.springframework.test.web.servlet.ResultActions;
-//import project.question.controller.QuestionController;
-//import project.question.dto.QuestionPatchDto;
-//import project.question.dto.QuestionPostDto;
-//import project.question.dto.QuestionResponseDto;
+//import com.codestates.server.question.controller.QuestionController;
+//import com.codestates.server.question.dto.QuestionPatchDto;
+//import com.codestates.server.question.dto.QuestionPostDto;
+//import com.codestates.server.question.dto.QuestionResponseDto;
 //import project.question.entity.Question;
 //import project.tag.entity.Tag;
 //import project.user.entity.User;
-//import project.question.mapper.QuestionMapper;
-//import project.question.service.QuestionService;
+//import com.codestates.server.question.mapper.QuestionMapper;
+//import com.codestates.server.question.service.QuestionService;
 //
 //import java.util.List;
 //

@@ -1,12 +1,8 @@
-package project.user.dto;
+package com.codestates.server.user.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import project.question.dto.QuestionResponseDto;
-import project.question.entity.Question;
-
-import java.util.List;
 
 @Getter
 @Setter

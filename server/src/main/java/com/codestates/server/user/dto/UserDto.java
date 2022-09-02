@@ -3,14 +3,8 @@ package com.codestates.server.user.dto;
 import com.codestates.server.answer.dto.AnswerDto;
 import com.codestates.server.question.dto.QuestionDto;
 import com.codestates.server.subscribe.dto.SubscribeDto;
-import com.codestates.server.tag.dto.TagDto;
-import com.codestates.server.user.entity.UserTag;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
-import org.springframework.data.annotation.LastModifiedDate;
 
-import javax.persistence.Column;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;

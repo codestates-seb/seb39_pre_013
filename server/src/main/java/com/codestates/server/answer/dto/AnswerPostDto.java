@@ -1,4 +1,4 @@
-package project.answer.dto;
+package com.codestates.server.answer.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

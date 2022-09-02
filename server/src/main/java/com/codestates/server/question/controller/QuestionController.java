@@ -1,19 +1,17 @@
-package project.question.controller;
+package com.codestates.server.question.controller;
 
+import com.codestates.server.common.dto.MultiResponseDto;
+import com.codestates.server.common.dto.SingleResponseDto;
+import com.codestates.server.question.dto.QuestionPatchDto;
+import com.codestates.server.question.dto.QuestionPostDto;
+import com.codestates.server.question.entity.Question;
+import com.codestates.server.question.mapper.QuestionMapper;
+import com.codestates.server.question.service.QuestionService;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import project.dto.MultiResponseDto;
-import project.dto.SingleResponseDto;
-import project.question.dto.QuestionPatchDto;
-import project.question.dto.QuestionPostDto;
-import project.question.entity.Question;
-import project.question.mapper.QuestionMapper;
-import project.question.service.QuestionService;
-import project.user.entity.User;
 
 import java.util.List;
 

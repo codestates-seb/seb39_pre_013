@@ -50,7 +50,7 @@ public class User extends BaseEntity {
     public void addQuestion(Question question){
         questions.add(question);
         if (question.getUser() != this){
-            question.setUser(this);
+            question.addUser(this);
         }
     }
 
@@ -66,7 +66,7 @@ public class User extends BaseEntity {
             answer.setUser(this);
         }
     }
-
+    @Builder
     public User(Long id, String email, String password, String nickname, Long reputation, String title, String aboutMe, String location, String websiteLink, String twitterLink, String githubLink, String roles, List<Question> questions, List<UserTag> userTags, List<Answer> answers, List<Subscribe> subscribes) {
         this.id = id;
         this.email = email;
@@ -85,11 +85,6 @@ public class User extends BaseEntity {
         this.answers = answers;
         this.subscribes = subscribes;
     }
-
-    @Builder
-
-
-
 
     public List<String> getRoleList() {
         if (this.roles.length() > 0) {

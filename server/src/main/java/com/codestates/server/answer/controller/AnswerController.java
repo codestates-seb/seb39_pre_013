@@ -1,5 +1,7 @@
-package project.answer.controller;
+package com.codestates.server.answer.controller;
 
+import com.codestates.server.answer.entity.Answer;
+import com.codestates.server.common.dto.SingleResponseDto;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,7 +10,6 @@ import com.codestates.server.answer.dto.AnswerPatchDto;
 import com.codestates.server.answer.dto.AnswerPostDto;
 import com.codestates.server.answer.mapper.AnswerMapper;
 import com.codestates.server.answer.service.AnswerService;
-import project.dto.SingleResponseDto;
 
 @RestController
 @RequestMapping("/api/v1/answers")

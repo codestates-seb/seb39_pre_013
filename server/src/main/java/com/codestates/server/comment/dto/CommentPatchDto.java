@@ -1,4 +1,4 @@
-package project.comment.dto;
+package com.codestates.server.comment.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

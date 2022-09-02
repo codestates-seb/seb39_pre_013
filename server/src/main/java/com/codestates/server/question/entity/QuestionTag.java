@@ -1,9 +1,9 @@
-package project.question.entity;
+package com.codestates.server.question.entity;
 
+import com.codestates.server.tag.entity.Tag;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import project.tag.entity.Tag;
 
 import javax.persistence.*;
 

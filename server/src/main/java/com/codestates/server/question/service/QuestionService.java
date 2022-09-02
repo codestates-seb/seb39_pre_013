@@ -1,14 +1,12 @@
-package project.question.service;
+package com.codestates.server.question.service;
 
+import com.codestates.server.question.entity.Question;
+import com.codestates.server.question.repository.QuestionRepository;
+import com.codestates.server.user.repository.UserRepository;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-import project.question.entity.Question;
-import project.question.repository.QuestionRepository;
-import project.user.entity.User;
-import project.user.repository.UserRepository;
 
 import java.util.Optional;
 

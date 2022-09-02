@@ -1,12 +1,12 @@
-package project.question.dto;
+package com.codestates.server.question.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-import project.answer.dto.AnswerResponseDto;
-import project.comment.dto.CommentResponseDto;
-import project.user.dto.UserResponseDto;
+import com.codestates.server.answer.dto.AnswerResponseDto;
+import com.codestates.server.comment.dto.CommentResponseDto;
+import com.codestates.server.user.dto.UserResponseDto;
 
 import java.time.LocalDateTime;
 import java.util.List;

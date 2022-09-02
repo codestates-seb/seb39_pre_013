@@ -1,9 +1,9 @@
-package project.comment.service;
+package com.codestates.server.comment.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import project.comment.entity.Comment;
-import project.comment.repository.CommentRepository;
+import com.codestates.server.comment.entity.Comment;
+import com.codestates.server.comment.repository.CommentRepository;
 
 import java.util.Optional;
 

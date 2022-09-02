@@ -1,20 +1,20 @@
-package project.question.mapper;
+package com.codestates.server.question.mapper;
 
+import com.codestates.server.answer.entity.Answer;
+import com.codestates.server.question.entity.Question;
+import com.codestates.server.user.entity.User;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import project.answer.dto.AnswerResponseDto;
-import project.answer.entity.Answer;
-import project.comment.dto.CommentResponseDto;
-import project.comment.entity.Comment;
-import project.question.dto.QuestionPatchDto;
-import project.question.dto.QuestionPostDto;
-import project.question.dto.QuestionResponseDto;
-import project.question.dto.QuestionTagResponseDto;
-import project.question.entity.Question;
-import project.question.entity.QuestionTag;
-import project.user.dto.UserResponseDto;
-import project.user.entity.User;
+import com.codestates.server.answer.dto.AnswerResponseDto;
+import com.codestates.server.comment.dto.CommentResponseDto;
+import com.codestates.server.comment.entity.Comment;
+import com.codestates.server.question.dto.QuestionPatchDto;
+import com.codestates.server.question.dto.QuestionPostDto;
+import com.codestates.server.question.dto.QuestionResponseDto;
+import com.codestates.server.question.dto.QuestionTagResponseDto;
+import com.codestates.server.question.entity.QuestionTag;
+import com.codestates.server.user.dto.UserResponseDto;
 
 import java.util.List;
 
@@ -25,24 +25,12 @@ public interface QuestionMapper {
 
     Question questionPatchDtoToQuestion(QuestionPatchDto questionPatchDto);
 
-//    @Mapping(target = "user.answers", ignore = true)
-//    @Mapping(target = "user.questions", ignore = true)
-//    @Mapping(target = "user.userTags", ignore = true)
-////    @Mapping(target = "answers[].question", ignore = true)
-//    @Mapping(target = "answers", ignore = true)
-//    @Mapping(target = "questionTags", ignore = true)
-//    @Mapping(target = "comments", ignore = true)
-//    @InheritInverseConfiguration(name = "answersToAnswerResponseDtos")
-//    @InheritInverseConfiguration(name = "userToUserResponseDto")
-//    @Mapping(source = "user", target = ".")
-//    @Mapping(source = "answers", target = ".")
     QuestionResponseDto questionToQuestionResponseDto(Question question);
 
     List<QuestionResponseDto> questionsToQuestionResponseDtos(List<Question> questions);
 
     @InheritInverseConfiguration
     UserResponseDto userToUserResponseDto(User user);
-//
     @InheritInverseConfiguration
     List<AnswerResponseDto> answersToAnswerResponseDtos(List<Answer> answers);
 

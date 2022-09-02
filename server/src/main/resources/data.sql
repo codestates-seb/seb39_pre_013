@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 
 insert into user (`id`,`email`,`nickname`,`password`,`created_at`,`modified_at`,`about_me`,`github_link`,`location`,`reputation`,`roles`,`title`,`twitter_link`) values(1,'kws3363@gmail.com','김수보','1234',now(),now() ,'백엔드개발자 ','https://github.com/subo-9439','부산',1000,'ROLE_USER','나는백엔드개발자가될거야','twitter.com');
 insert into user (`id`,`email`,`nickname`,`password`,`created_at`,`modified_at`,`about_me`,`github_link`,`location`,`reputation`,`roles`,`title`,`twitter_link`) values(2,'kws33623@gmail.com','김수2보','12334',now(),now(),'부산사는 프론트개발자가 되고 싶은 1년차 주니어 개발자입니다','https://github.com/subo-9439','부산',1000,'ROLE_USER','나는백엔드개발자가될거야','twitter.com' );
@@ -28,10 +27,10 @@ insert into user (`email`,`nickname`,`password`,`created_at`,`modified_at`) valu
 insert into user (`email`,`nickname`,`password`,`created_at`,`modified_at`) value ('24@gasdf.com','x','dsfa',now(),now() );
 insert into user (`email`,`nickname`,`password`,`created_at`,`modified_at`) value ('25@gasdf.com','y','dsfa',now(),now() );
 
-insert into question(`id`,`title`,`user_id`) value('1','자바어려워요','1');
-insert into question(`id`,`title`,`user_id`) value('2','자바어려워요2','1');
-insert into question(`id`,`title`,`user_id`) value('3','자바어려워요3','1');
-insert into question(`id`,`title`,`user_id`) value('4','자바어려워요4','1');
+insert into question(`id`,`title`,`content`,`user_id`) value('1','자바어려워요','# ~~반가워요~~','1');
+insert into question(`id`,`title`,`content`,`user_id`) value('2','자바어려워요2','## ~~반가워요~~','1');
+insert into question(`id`,`title`,`content`,`user_id`) value('3','자바어려워요3','### ~~반가워요~~','1');
+insert into question(`id`,`title`,`content`,`user_id`) value('4','자바어려워요4','### ~~반가워요~~','1');
 
 insert into answer(`id`,`content`,`user_id`) value('1','그렇게 하는거 아닌데....','1');
 insert into answer(`id`,`content`,`user_id`) value('2','그렇게 하는거 맞는데....','1');
@@ -42,9 +41,9 @@ insert into user_tag(`id`,`name`,`tag_id`,`user_id`) value (1,'java',1,1);
 insert into subscribe(id, user_id,question_id,answer_id) value ('1','1','1','1');
 insert into subscribe(id, user_id,question_id,answer_id) value ('2','1','3','2');
 
---- 구독이
-=======
-INSERT INTO USERS(nickname, email, location, reputation, password) VALUES
+--- 영민님 데이터
+
+INSERT INTO USER(nickname, email, location, reputation, password) VALUES
 ('mozway', 'mozway@gmail.com', 'Mare Tranquillitatis', 1255, '1234'),
 ('Barmar', 'Barmar@gmail.com', 'Arlington, MA', 1037, '1234'),
 ('akrun', 'akrun@gmail.com', null, 1030, '1234'),
@@ -89,4 +88,4 @@ INSERT INTO QUESTION_TAG(name, question_id) VALUES
 ('tsql', 5),
 ('stored-procedures', 5),
 ('many-to-many', 5);
->>>>>>> clover
+

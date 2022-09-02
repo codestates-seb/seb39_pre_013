@@ -1,9 +1,9 @@
-package project.answer.service;
+package com.codestates.server.answer.service;
 
+import com.codestates.server.answer.entity.Answer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import project.answer.entity.Answer;
-import project.answer.repository.AnswerRepository;
+import com.codestates.server.answer.repository.AnswerRepository;
 import com.codestates.server.question.service.QuestionService;
 
 import java.util.Optional;

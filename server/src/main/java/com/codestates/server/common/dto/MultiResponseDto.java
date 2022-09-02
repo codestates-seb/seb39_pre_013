@@ -19,7 +19,6 @@ public class MultiResponseDto<T> {
                 page.getTotalPages());
     }
 
-
     @Getter
     @AllArgsConstructor
     private static class PageInfo{

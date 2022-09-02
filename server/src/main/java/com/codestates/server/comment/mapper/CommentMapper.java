@@ -1,10 +1,11 @@
-package project.comment.mapper;
+package com.codestates.server.comment.mapper;
 
+import com.codestates.server.user.entity.User;
 import org.mapstruct.*;
-import project.comment.dto.CommentPatchDto;
-import project.comment.dto.CommentPostDto;
-import project.comment.dto.CommentResponseDto;
-import project.comment.entity.Comment;
+import com.codestates.server.comment.dto.CommentPatchDto;
+import com.codestates.server.comment.dto.CommentPostDto;
+import com.codestates.server.comment.dto.CommentResponseDto;
+import com.codestates.server.comment.entity.Comment;
 import com.codestates.server.user.dto.UserResponseDto;
 
 @Mapper(componentModel = "spring",

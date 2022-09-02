@@ -28,3 +28,4 @@ logging:
           jpa: DEBUG
 server:
   port: 8080
+
