@@ -6,10 +6,8 @@ import com.codestates.server.question.dto.QuestionDto;
 import com.codestates.server.question.entity.Question;
 import com.codestates.server.subscribe.dto.SubscribeDto;
 import com.codestates.server.subscribe.entity.Subscribe;
-import com.codestates.server.tag.dto.TagDto;
 import com.codestates.server.tag.entity.Tag;
 import com.codestates.server.user.dto.UserDto;
-import com.codestates.server.user.dto.UserRequestDto;
 import com.codestates.server.user.dto.UserTagDto;
 import com.codestates.server.user.entity.User;
 import com.codestates.server.user.entity.UserTag;
@@ -21,7 +19,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-09-02T23:11:14+0900",
+    date = "2022-09-03T00:35:24+0900",
     comments = "version: 1.5.2.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-7.5.jar, environment: Java 11.0.10 (Oracle Corporation)"
 )
 @Component
@@ -31,32 +29,6 @@ public class UserMapperImpl implements UserMapper {
     private CustomForEntityMapper customForEntityMapper;
     @Autowired
     private CustomForDtoMapper customForDtoMapper;
-
-    @Override
-    public UserTagDto tagDtoToUserTagDto(TagDto tagDto) {
-        if ( tagDto == null ) {
-            return null;
-        }
-
-        UserTagDto userTagDto = new UserTagDto();
-
-        userTagDto.setName( tagDto.getName() );
-
-        return userTagDto;
-    }
-
-    @Override
-    public UserTag userTagDtoToUserTag(UserTagDto userTagDto) {
-        if ( userTagDto == null ) {
-            return null;
-        }
-
-        UserTag userTag = new UserTag();
-
-        userTag.setName( userTagDto.getName() );
-
-        return userTag;
-    }
 
     @Override
     public UserTag tagDtoToUserTag(Tag tag) {
@@ -74,18 +46,17 @@ public class UserMapperImpl implements UserMapper {
     }
 
     @Override
-    public User signUpDtoToUser(UserRequestDto.signUp dto) {
-        if ( dto == null ) {
+    public UserTag userTagDtoToUserTag(UserTagDto userTagDto) {
+        if ( userTagDto == null ) {
             return null;
         }
 
-        User.UserBuilder user = User.builder();
+        UserTag userTag = new UserTag();
 
-        user.email( dto.getEmail() );
-        user.password( dto.getPassword() );
-        user.nickname( dto.getNickname() );
+        userTag.setId( userTagDto.getId() );
+        userTag.setName( userTagDto.getName() );
 
-        return user.build();
+        return userTag;
     }
 
     @Override

@@ -1,11 +1,11 @@
 package com.codestates.server.user.dto;
 
-import com.codestates.server.tag.dto.TagDto;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserRequestDto {
@@ -18,13 +18,13 @@ public class UserRequestDto {
         private String email;
         private String password;
         private String nickname;
-        private List<TagDto> tags;
+        private List<UserTagDto> userTags = new ArrayList<>();
 
-        public signUp(String email, String password, String nickname, List<TagDto> tags) {
+        public signUp(String email, String password, String nickname, List<UserTagDto> userTags) {
             this.email = email;
             this.password = password;
             this.nickname = nickname;
-            this.tags = tags;
+            this.userTags = userTags==null? new ArrayList<>() : userTags;
         }
     }
 

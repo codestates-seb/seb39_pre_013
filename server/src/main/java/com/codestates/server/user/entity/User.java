@@ -38,7 +38,7 @@ public class User extends BaseEntity {
     @OneToMany(mappedBy = "user")
     private List<Question> questions = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
     private List<UserTag> userTags = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
@@ -80,9 +80,9 @@ public class User extends BaseEntity {
         this.twitterLink = twitterLink;
         this.githubLink = githubLink;
         this.roles = roles;
-        this.questions = questions;
-        this.userTags = userTags;
-        this.answers = answers;
+        this.questions = questions==null? new ArrayList<>():questions;
+        this.userTags = userTags==null? new ArrayList<>():userTags;
+        this.answers = answers==null? new ArrayList<>():answers;
         this.subscribes = subscribes;
     }
 
