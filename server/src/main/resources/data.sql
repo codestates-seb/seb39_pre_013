@@ -39,4 +39,6 @@ insert into tag(`id`,`name`,`description`) value('1','java','자바어쩌구저�
 insert into user_tag(`id`,`name`,`tag_id`,`user_id`) value (1,'java',1,1);
 
 insert into subscribe(id, user_id,question_id,answer_id) value ('1','1','1','1');
-insert into subscribe(id, user_id,question_id,answer_id) value ('2','1','3','1');
+insert into subscribe(id, user_id,question_id,answer_id) value ('2','1','3','2');
+
+--- 구독이

@@ -27,6 +27,5 @@ public interface UserMapper {
 
     @Mapping(target = "subscribes", source = "subscribes", qualifiedByName = "SubscribeToSubscribeDto")
     UserDto userToUserDto(User user);
-
     List<UserDto> userListToUserDtoList(List<User> users);
 }

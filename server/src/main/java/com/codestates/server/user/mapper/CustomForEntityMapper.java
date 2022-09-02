@@ -44,9 +44,11 @@ public interface CustomForEntityMapper {
     //Todo 4
     @Named("SubscribeToSubscribeDto")
     @Mappings({
-            @Mapping(target = "userId", source = "user.id"),
+            @Mapping(target = "userId", source = "user.id" ),
             @Mapping(target = "questionId", source = "question.id"),
-            @Mapping(target = "answerId", source = "answer.id")
+            @Mapping(target = "questionTitle", source = "question.title"),
+            @Mapping(target = "answerId", source = "answer.id"),
+            @Mapping(target = "answerContent", source = "answer.content")
     })
     SubscribeDto subScribeToSubscribeDto(Subscribe subscribe);
 
