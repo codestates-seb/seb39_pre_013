@@ -105,7 +105,11 @@ export default function DetailQuestion() {
     },
   ]);
 
+<<<<<<< HEAD
 
+=======
+  console.log(`id : ${params.id} = `, result);
+>>>>>>> 793f708114b2695d360ddd920911b58c03465ae6
   if (result[0].isFetching || result[1].isFetching || result[2].isFetching) {
     return <Loading />;
   }

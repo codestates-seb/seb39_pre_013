@@ -34,6 +34,7 @@ export default function AnswerHeader(props) {
 
 const Container = styled.div`
   padding-top: 10px;
+  width: 100%;
 `;
 
 const AnswerHead = styled.div`
