@@ -57,7 +57,7 @@ export const dummyData = {
 
 /**
  *
- * @Todo 내부 QuestionHeader 컴포넌트 분리
+ * @Todo 답변 스타일링 수정필요, 댓글 추가 필요, 데이터 패칭 타이밍 확인 필요
  * @Params 질문, 답변에 따른 내부 데이터 변화
  */
 
@@ -105,7 +105,7 @@ export default function DetailQuestion() {
     },
   ]);
 
-  console.log(`id : ${params.id} = `, result[1]);
+
   if (result[0].isFetching || result[1].isFetching || result[2].isFetching) {
     return <Loading />;
   }
