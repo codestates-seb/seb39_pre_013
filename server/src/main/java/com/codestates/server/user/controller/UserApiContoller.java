@@ -95,26 +95,29 @@ public class UserApiContoller {
             response.setHeader("refresh_token", "token expired");
             return new ResponseEntity<>(new HashMap<>(){{put("msg","refresh토큰이 만료되었습니다.");}},HttpStatus.FORBIDDEN);
         }
-        createAccessToken(response, refreshJwt);
-        return new ResponseEntity<>(new HashMap<>(){{put("msg","accessToken이 발급되었습니다.");}},HttpStatus.CREATED);
+        String accessToken = createAccessToken(response, refreshJwt);
+        response.setHeader("access_token","Bearer "+accessToken);
+        response.setHeader("refresh_token","Bearer "+refreshToken);
+
+        return new ResponseEntity<>(new HashMap<>(){{put("msg","accessToken이 재발급되었습니다.");}},HttpStatus.CREATED);
     }
 
 
 
-    private void createAccessToken(HttpServletResponse response, DecodedJWT refreshJwt) {
+    private String createAccessToken(HttpServletResponse response, DecodedJWT refreshJwt) {
         String email;
         String nickname;
         String id;
         email = refreshJwt.getClaim("email").asString();
         id = refreshJwt.getClaim("id").asString();
         nickname = refreshJwt.getClaim("nickname").asString();
-        String access_token = JWT.create()
+        return  JWT.create()
                 .withSubject(email)
                 .withExpiresAt(new Date(System.currentTimeMillis() + (60 * 1000 * 30)))
                 .withClaim("id", id)
                 .withClaim("nickname", nickname)
                 .sign(Algorithm.HMAC512(JWT_KEY));
-        response.setHeader("access_token","Bearer "+access_token);
+
     }
 
 }
