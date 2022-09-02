@@ -46,8 +46,13 @@ public class QuestionService {
     }
 
     public void deleteQuestion(long questionId) {
+        System.out.println(2);
+        System.out.println("questionId = " + questionId);
         Question foundQuestion = findVerifiedQuestion(questionId);
+        System.out.println("foundQuestion = " + foundQuestion);
+        System.out.println(3);
         questionRepository.delete(foundQuestion);
+        System.out.println(4);
     }
 
     public Question findVerifiedQuestion(long questionId) {
