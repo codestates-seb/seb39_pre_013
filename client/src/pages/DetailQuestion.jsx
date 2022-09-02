@@ -105,7 +105,7 @@ export default function DetailQuestion() {
     },
   ]);
 
-  console.log(`id : ${params.id} = `, result[1]);
+  console.log(`id : ${params.id} = `, result);
   if (result[0].isFetching || result[1].isFetching || result[2].isFetching) {
     return <Loading />;
   }
