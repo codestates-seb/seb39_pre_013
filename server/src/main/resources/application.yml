@@ -1,0 +1,30 @@
+spring:
+  profiles:
+    include:
+      - naver
+      - gmail
+      - etc
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/abcd?serverTimezone=Asia/Seoul
+    username: root
+    password: '@tnqh258'
+    data: data.sql
+  jpa:
+    hibernate:
+      dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+      ddl-auto: create
+    show-sql: true
+    properties.hibernate.format_sql: true
+    defer-datasource-initialization: true
+  sql:
+    init:
+      mode: always
+logging:
+  level:
+    org:
+      springframework:
+        orm:
+          jpa: DEBUG
+server:
+  port: 8080
