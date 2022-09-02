@@ -4,7 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.codestates.server.common.dto.MultiResponseDto;
-import com.codestates.server.common.dto.ResponseDto;
+import com.codestates.server.common.dto.SingleResponseDto;
 import com.codestates.server.user.dto.UserRequestDto;
 import com.codestates.server.user.dto.UserDto;
 import com.codestates.server.user.entity.User;
@@ -56,7 +56,7 @@ public class UserApiContoller {
         user.setRoles("ROLE_USER");
         User createdUser = userService.createUser(user);
         UserDto userDto = userMapper.userToUserDto(createdUser);
-        return new ResponseEntity<>(new ResponseDto<>(userDto), HttpStatus.CREATED);
+        return new ResponseEntity<>(new SingleResponseDto<>(userDto), HttpStatus.CREATED);
     }
 
     @GetMapping("/{user-id}")
@@ -65,7 +65,7 @@ public class UserApiContoller {
         User findUser = userService.findUser(userId).orElseThrow();
         UserDto userDto = userMapper.userToUserDto(findUser);
 
-        return new ResponseEntity<>(new ResponseDto<>(userDto)
+        return new ResponseEntity<>(new SingleResponseDto<>(userDto)
                 ,HttpStatus.OK);
     }
 
