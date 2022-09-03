@@ -14,8 +14,6 @@ import DetailQuestion from './pages/DetailQuestion';
 import UsersPage from './pages/UsersPage';
 
 function App() {
-  const queryClient = useQueryClient();
-
   return (
     <>
       <Header />

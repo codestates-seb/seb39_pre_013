@@ -18,7 +18,6 @@ export default function AskQuestion() {
       </FormContainer>
       <div className="btn-box">
         <Button>Review your question</Button>
-        <Button mode="cancel">Daiscard draft</Button>
       </div>
     </Container>
   );

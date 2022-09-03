@@ -4,14 +4,16 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable function-paren-newline */
 import axios from 'axios';
-import React from 'react';
-import { useQueries, useQuery } from 'react-query';
+import React, { useState } from 'react';
+import { useMutation, useQueries, useQuery, useQueryClient } from 'react-query';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import Editor from '../components/AskQuestion/Editor';
 import Loading from '../components/Common/Loading';
 import Answers from '../components/DetailQuestion/Answers';
 import QuestionViewer from '../components/DetailQuestion/QuestionViewer';
 import Vote from '../components/DetailQuestion/Vote';
+import Button from '../components/UI/Button';
 
 export const dummyData = {
   title: 'Sorted function in Python dictionary',
@@ -62,7 +64,9 @@ export const dummyData = {
  */
 
 export default function DetailQuestion() {
+  const [editorValue, setEditorValue] = useState(undefined);
   const params = useParams();
+  const queryClient = useQueryClient();
   const getDetailQuestion = async () => {
     const { data } = await axios.get(
       `https://api.stackexchange.com/2.3/questions/${params.id}?page=1&pagesize=1&order=desc&sort=activity&site=stackoverflow&filter=!*MZqiH2nLUzaa-7j&key=xvUIc44g5zNOfh7F5nXJig((`,
@@ -105,11 +109,28 @@ export default function DetailQuestion() {
     },
   ]);
 
-  console.log(`id : ${params.id} = `, result);
+  const postAddAnswer = (payload) =>
+    axios.post('http://pre13.duckdns.org:81/api/v1/answers', payload);
+
+  const {
+    mutate: postAnswer,
+    isLoading,
+    isError,
+    error,
+  } = useMutation(postAddAnswer, {
+    onSuccess: () => queryClient.invalidateQueries(),
+  });
+
+  const AddAnswerHandler = () => {
+    const payload = { questionId: params.id, content: editorValue, userId: 0 };
+    postAnswer(payload);
+  };
+
   if (result[0].isFetching || result[1].isFetching || result[2].isFetching) {
     return <Loading />;
   }
 
+  console.log(editorValue);
   return (
     <Container>
       <div>
@@ -144,14 +165,17 @@ export default function DetailQuestion() {
           <Answers answerData={result[1].data.items} />
         )}
       </AnswerContainer>
+      <AddAnswers>
+        <span>Your Answer</span>
+        <Editor setEditorValue={setEditorValue} />
+      </AddAnswers>
+      <Button onClick={AddAnswerHandler}>
+        {isLoading ? 'Loading...' : 'Post Your Answer'}
+      </Button>
     </Container>
   );
 }
 
-// eslint-disable-next-line no-lone-blocks
-{
-  /* <Answers answerData={result[1].data.items} /> */
-}
 const Container = styled.article`
   padding: 24px;
   background-color: hsl(0, 0%, 17.5%);
@@ -189,3 +213,5 @@ const QuestionBody = styled.section`
 `;
 
 const AnswerContainer = styled.div``;
+
+const AddAnswers = styled.div``;

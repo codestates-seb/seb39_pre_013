@@ -71,9 +71,6 @@ function QuestionsSection() {
               voteCount={v.score}
             />
           ))}
-          {/* <QuestionBlock />
-          <QuestionBlock />
-          <QuestionBlock /> */}
         </div>
       </div>
     </StyledMain>
