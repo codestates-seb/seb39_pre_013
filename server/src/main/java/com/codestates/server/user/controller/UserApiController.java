@@ -5,15 +5,20 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.codestates.server.common.dto.MultiResponseDto;
 import com.codestates.server.common.dto.SingleResponseDto;
-import com.codestates.server.user.dto.UserRequestDto;
+import com.codestates.server.common.oauth.PrincipalDetails;
 import com.codestates.server.user.dto.UserDto;
+import com.codestates.server.user.dto.UserPatchDto;
+import com.codestates.server.user.dto.UserRequestDto;
 import com.codestates.server.user.entity.User;
 import com.codestates.server.user.mapper.UserMapper;
 import com.codestates.server.user.service.UserService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +26,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.Positive;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -44,11 +51,6 @@ public class UserApiController {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @GetMapping("/hello")
-    public String hello(){
-        return JWT_KEY;
-    }
-
     @PostMapping("/signup")
     public ResponseEntity<?> signup(@RequestBody UserRequestDto.signUp requestBody){
         User user = userMapper.signUpDtoToUser(requestBody);
@@ -68,7 +70,6 @@ public class UserApiController {
         return new ResponseEntity<>(new SingleResponseDto<>(userDto)
                 ,HttpStatus.OK);
     }
-
     @GetMapping
     public ResponseEntity<?> getUserPage(@Positive @RequestParam("page") int page,
                                          @Positive @RequestParam("page-size") int pageSize) {
@@ -78,6 +79,61 @@ public class UserApiController {
         return new ResponseEntity<>(new MultiResponseDto<>(userDtos
                 ,pageUsers)
                 ,HttpStatus.OK);
+    }
+    @GetMapping("/abc")
+    public ResponseEntity<?> abc(){
+//        PrincipalDetails principalDetails = (PrincipalDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        System.out.println("#############################################");
+        System.out.println("#############################################");
+        System.out.println("################1111111111111111111111#######");
+        System.out.println("#############################################");
+        System.out.println("#############################################");
+        System.out.println("################22222222222222222222222#######");
+//        User user = userService.findUser(1L).orElseThrow();
+        return new ResponseEntity<>(new SingleResponseDto<>("Gg"),HttpStatus.OK);
+    }
+//    @PreAuthorize("hasRole('ROLE_USER')")
+    @GetMapping("/info")
+    public ResponseEntity<?> getMyPage(){
+//        PrincipalDetails principalDetails = (PrincipalDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        System.out.println("###########################################################################");
+        System.out.println("###########################################################################");
+        System.out.println("###########################111111111111111111111111111111###################");
+        System.out.println("###########################################################################");
+        System.out.println("###########################################################################");
+        System.out.println("###########################################################################");
+        System.out.println("###########################################################################");
+        System.out.println("###########################################################################");
+//        User user = userService.findUser(1L).orElseThrow();
+
+        System.out.println("######################################################################");
+        System.out.println("######################################################################");
+        System.out.println("######################################################################");
+        System.out.println("###################222222222222222222222222222########################");
+        System.out.println("######################################################################");
+        System.out.println("######################################################################");
+        System.out.println("######################################################################");
+        System.out.println("######################################################################");
+//        UserDto userDto = userMapper.userToUserDto(user);
+        return new ResponseEntity<>(new SingleResponseDto<>("gg"),HttpStatus.OK);
+    }
+
+    //    @PreAuthorize("hasRole('ROLE_USER')")
+    @PatchMapping("/edit")
+    public ResponseEntity<?> editMyPage(@RequestBody UserPatchDto userPatchDto) {
+        PrincipalDetails principalDetails = (PrincipalDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (!principalDetails.getUser().getId().equals(userPatchDto.getId())) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        User user = userService.updateUser(principalDetails.getUser().getId(),userPatchDto);
+        UserDto userDto = userMapper.userToUserDto(user);
+        Charset utf8 = StandardCharsets.UTF_8;
+        HttpHeaders httpHeaders = new HttpHeaders();
+        MediaType mediaType = new MediaType("application","json",utf8);
+        httpHeaders.setContentType(mediaType);
+
+        return new ResponseEntity<>(new SingleResponseDto<>(userDto), httpHeaders,HttpStatus.ACCEPTED);
     }
 
     @GetMapping("/refresh")

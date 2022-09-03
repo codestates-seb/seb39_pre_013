@@ -4,6 +4,7 @@ import com.codestates.server.answer.entity.Answer;
 import com.codestates.server.common.listener.BaseEntity;
 import com.codestates.server.question.entity.Question;
 import com.codestates.server.subscribe.entity.Subscribe;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -24,7 +25,6 @@ public class User extends BaseEntity {
     private String email;
     @Column(nullable = false)
     private String password;
-    @Column(nullable = false, unique = true)
     private String nickname;
     private Long reputation;
     private String title;
@@ -36,15 +36,19 @@ public class User extends BaseEntity {
     private String roles;
 
     @OneToMany(mappedBy = "user")
+    @JsonIgnore
     private List<Question> questions = new ArrayList<>();
 
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<UserTag> userTags = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
+    @JsonIgnore
     private List<Answer> answers = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
+    @JsonIgnore
     private List<Subscribe> subscribes = new ArrayList<>();
 
     public void addQuestion(Question question){

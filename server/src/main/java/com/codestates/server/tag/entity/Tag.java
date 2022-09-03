@@ -24,7 +24,7 @@ public class Tag {
     private String name;
     private String description;
 
-    @OneToMany(mappedBy = "tag",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "tag")
     private List<UserTag> userTags;
 
     public void addUserTag(UserTag userTag){
