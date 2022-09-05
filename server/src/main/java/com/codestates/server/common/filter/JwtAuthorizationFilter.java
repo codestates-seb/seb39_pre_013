@@ -42,9 +42,11 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
             chain.doFilter(request,response);
             return;
         }
+
         String username = null;
         try {
             String jwtToken = jwtHeader.replace("Bearer ", "");
+
             username = JWT.require(Algorithm.HMAC512(JWT_KEY)).build().verify(jwtToken).getClaim("sub").asString();
         }catch (com.auth0.jwt.exceptions.TokenExpiredException e){
             response.setHeader("access_token","token expired");
@@ -61,6 +63,8 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
             SecurityContextHolder.getContext().setAuthentication(authentication);
             chain.doFilter(request,response);
         }
-        super.doFilterInternal(request, response, chain);
+//        else {
+//            super.doFilterInternal(request, response, chain);
+//        }
     }
 }

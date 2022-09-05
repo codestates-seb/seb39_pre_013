@@ -18,6 +18,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.annotation.Validated;
@@ -80,45 +81,18 @@ public class UserApiController {
                 ,pageUsers)
                 ,HttpStatus.OK);
     }
-    @GetMapping("/abc")
-    public ResponseEntity<?> abc(){
-//        PrincipalDetails principalDetails = (PrincipalDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        System.out.println("#############################################");
-        System.out.println("#############################################");
-        System.out.println("################1111111111111111111111#######");
-        System.out.println("#############################################");
-        System.out.println("#############################################");
-        System.out.println("################22222222222222222222222#######");
-//        User user = userService.findUser(1L).orElseThrow();
-        return new ResponseEntity<>(new SingleResponseDto<>("Gg"),HttpStatus.OK);
-    }
-//    @PreAuthorize("hasRole('ROLE_USER')")
-    @GetMapping("/info")
+
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @GetMapping("/auth")
     public ResponseEntity<?> getMyPage(){
-//        PrincipalDetails principalDetails = (PrincipalDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        System.out.println("###########################################################################");
-        System.out.println("###########################################################################");
-        System.out.println("###########################111111111111111111111111111111###################");
-        System.out.println("###########################################################################");
-        System.out.println("###########################################################################");
-        System.out.println("###########################################################################");
-        System.out.println("###########################################################################");
-        System.out.println("###########################################################################");
-//        User user = userService.findUser(1L).orElseThrow();
-
-        System.out.println("######################################################################");
-        System.out.println("######################################################################");
-        System.out.println("######################################################################");
-        System.out.println("###################222222222222222222222222222########################");
-        System.out.println("######################################################################");
-        System.out.println("######################################################################");
-        System.out.println("######################################################################");
-        System.out.println("######################################################################");
-//        UserDto userDto = userMapper.userToUserDto(user);
-        return new ResponseEntity<>(new SingleResponseDto<>("gg"),HttpStatus.OK);
+        PrincipalDetails principalDetails = (PrincipalDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userService.findUser(principalDetails.getUser().getId()).orElseThrow();
+        UserDto userDto = userMapper.userToUserDto(user);
+        return new ResponseEntity<>(new SingleResponseDto<>(userDto),HttpStatus.OK);
     }
 
-    //    @PreAuthorize("hasRole('ROLE_USER')")
+
+    @PreAuthorize("hasRole('ROLE_USER')")
     @PatchMapping("/edit")
     public ResponseEntity<?> editMyPage(@RequestBody UserPatchDto userPatchDto) {
         PrincipalDetails principalDetails = (PrincipalDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -157,7 +131,6 @@ public class UserApiController {
 
         return new ResponseEntity<>(new HashMap<>(){{put("msg","accessToken이 재발급되었습니다.");}},HttpStatus.CREATED);
     }
-
 
 
     private String createAccessToken(HttpServletResponse response, DecodedJWT refreshJwt) {

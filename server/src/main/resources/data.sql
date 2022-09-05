@@ -27,10 +27,10 @@ insert into user (`email`,`nickname`,`password`,`created_at`,`modified_at`) valu
 insert into user (`email`,`nickname`,`password`,`created_at`,`modified_at`) value ('24@gasdf.com','x','dsfa',now(),now() );
 insert into user (`email`,`nickname`,`password`,`created_at`,`modified_at`) value ('25@gasdf.com','y','dsfa',now(),now() );
 
-insert into question(`id`,`title`,`content`,`user_id`) value('1','자바어려워요','# ~~반가워요~~','1');
-insert into question(`id`,`title`,`content`,`user_id`) value('2','자바어려워요2','## ~~반가워요~~','1');
-insert into question(`id`,`title`,`content`,`user_id`) value('3','자바어려워요3','### ~~반가워요~~','1');
-insert into question(`id`,`title`,`content`,`user_id`) value('4','자바어려워요4','### ~~반가워요~~','1');
+insert into question(`id`,`title`,`content`,`user_id`,created_at,modified_at) value('1','자바어려워요','# ~~반가워요~~','1',now(),now());
+insert into question(`id`,`title`,`content`,`user_id`,created_at,modified_at) value('2','자바어려워요2','## ~~반가워요~~','1',now(),now());
+insert into question(`id`,`title`,`content`,`user_id`,created_at,modified_at) value('3','자바어려워요3','### ~~반가워요~~','1',now(),now());
+insert into question(`id`,`title`,`content`,`user_id`,created_at,modified_at) value('4','자바어려워요4','### ~~반가워요~~','1',now(),now());
 
 insert into answer(`id`,`content`,`user_id`) value('1','그렇게 하는거 아닌데....','1');
 insert into answer(`id`,`content`,`user_id`) value('2','그렇게 하는거 맞는데....','1');
@@ -54,12 +54,12 @@ INSERT INTO USER(nickname, email, location, reputation, password) VALUES
 ('AmerllicA', 'AmerllicA@gmail.com', 'Tehran, Tehran Province, Iran', 24750, '1234'),
 ('Talha Akbar', 'Talha Akbar@gmail.com', 'Lahore, Pakistan', 323, '1234');
 
-INSERT INTO QUESTION(title, content, view, vote, user_id, modified_at) VALUES
-('How to close WebSockets properly from Application class?', 'I am using WebSockets for my chat app in android. For convenience, I am creating the connection in Application class so that it can be used by activities and fragments with one instance.', 121, 5, 1, CURRENT_TIMESTAMP),
-('Best way to build a network of Nodes from JSON to classes', 'I have a collection of elements that forms a net of measurements and are related in a recursive manner. I need to store them in a class of objects for storing in a Cassandra database. I have', 105, 3, 2, CURRENT_TIMESTAMP),
-('React Native: how to run flipper with apple silicon', 'I have a problem trying to run an application made in react-native which uses Flipper in apple silicon, I get the following error: I tried some things like running Xcode in rosetta mode but it', 73, 2, 3, CURRENT_TIMESTAMP),
-('Visual Studio Community 2022 for Mac 17.3.1 current column number', 'Is there a way to show current column number of the cursor in code editor?', 68, 1, 4, CURRENT_TIMESTAMP),
-('Assign group_id to all linked records in many-to-many table', 'There are 3 tables in my DB; Table 1 has', 127, 1, 5, CURRENT_TIMESTAMP);
+INSERT INTO QUESTION(title, content, view, vote, user_id, modified_at, created_at) VALUES
+('How to close WebSockets properly from Application class?', 'I am using WebSockets for my chat app in android. For convenience, I am creating the connection in Application class so that it can be used by activities and fragments with one instance.', 121, 5, 1, CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+('Best way to build a network of Nodes from JSON to classes', 'I have a collection of elements that forms a net of measurements and are related in a recursive manner. I need to store them in a class of objects for storing in a Cassandra database. I have', 105, 3, 2, CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+('React Native: how to run flipper with apple silicon', 'I have a problem trying to run an application made in react-native which uses Flipper in apple silicon, I get the following error: I tried some things like running Xcode in rosetta mode but it', 73, 2, 3, CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+('Visual Studio Community 2022 for Mac 17.3.1 current column number', 'Is there a way to show current column number of the cursor in code editor?', 68, 1, 4, CURRENT_TIMESTAMP,CURRENT_TIMESTAMP),
+('Assign group_id to all linked records in many-to-many table', 'There are 3 tables in my DB; Table 1 has', 127, 1, 5, CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
 
 INSERT INTO ANSWER(content, recommendation, question_id, user_id) VALUES
 ('The answer might be WebSocketActivity extends FragmentActivity implements WebSocketListener {} because Activity would implement these lifecycle methods, therefore they can be overridden.', 0, 1, 6),

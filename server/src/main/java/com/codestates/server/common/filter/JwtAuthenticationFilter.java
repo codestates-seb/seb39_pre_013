@@ -53,7 +53,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         log.info("해당유저는"+ principalDetails.getUsername());
         System.out.println(JWT_KEY);
         String accessToken = createAccessToken(principalDetails, 30);
-        String refreshToken = createRefreshToken(principalDetails, 600);
+        String refreshToken = createRefreshToken(principalDetails, 1);
 
         returnResponseEntity(response, accessToken, refreshToken);
     }
@@ -61,7 +61,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     private String createAccessToken(PrincipalDetails principalDetails, int x) {
         String accessToken = JWT.create()
                 .withSubject(principalDetails.getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis() + (60*1000* x)))
+                .withExpiresAt(new Date(System.currentTimeMillis() + (1*1000* x)))
                 .withClaim("id", principalDetails.getUser().getId())
                 .withClaim("nickname", principalDetails.getUser().getNickname())
                 .sign(Algorithm.HMAC512(JWT_KEY));

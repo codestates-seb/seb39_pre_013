@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-09-03T13:05:12+0900",
+    date = "2022-09-05T14:21:40+0900",
     comments = "version: 1.5.2.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-7.5.jar, environment: Java 11.0.10 (Oracle Corporation)"
 )
 @Component
@@ -79,6 +79,7 @@ public class QuestionMapperImpl implements QuestionMapper {
         List<QuestionTagResponseDto> questionTags = null;
         List<CommentResponseDto> comments = null;
         List<AnswerResponseDto> answers = null;
+        LocalDateTime createdAt = null;
         LocalDateTime modifiedAt = null;
 
         id = question.getId();
@@ -90,9 +91,10 @@ public class QuestionMapperImpl implements QuestionMapper {
         questionTags = questionTagsToQuestionTagResponseDtos( question.getQuestionTags() );
         comments = commentToCommentResponseDtos( question.getComments() );
         answers = answersToAnswerResponseDtos( question.getAnswers() );
+        createdAt = question.getCreatedAt();
         modifiedAt = question.getModifiedAt();
 
-        QuestionResponseDto questionResponseDto = new QuestionResponseDto( id, title, content, view, vote, user, questionTags, comments, answers, modifiedAt );
+        QuestionResponseDto questionResponseDto = new QuestionResponseDto( id, title, content, view, vote, user, questionTags, comments, answers, createdAt, modifiedAt );
 
         return questionResponseDto;
     }

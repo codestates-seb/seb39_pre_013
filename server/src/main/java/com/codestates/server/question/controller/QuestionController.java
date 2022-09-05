@@ -22,6 +22,7 @@ public class QuestionController {
     private final QuestionService questionService;
     private final QuestionMapper questionMapper;
 
+    //@PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping
     public ResponseEntity postQuestion(@RequestBody QuestionPostDto questionPostDto) {
         Question question = questionMapper.questionPostDtoToQuestion(questionPostDto);

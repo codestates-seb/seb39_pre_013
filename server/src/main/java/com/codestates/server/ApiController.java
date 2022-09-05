@@ -12,7 +12,9 @@ public class ApiController {
     @ResponseBody
     public String welcomeAsHTML() {
         return "<html>\n" + "<header><title>Welcome</title></header>\n" +
-                "<body>\n" + "<a href='https://documenter.getpostman.com/view/20094507/VUxRPmTG' " +
-                "target='_blank'>api 명세서</a>" + "</body>\n" + "</html>";
+                "<body>\n"
+                + "<a href='https://documenter.getpostman.com/view/20094507/VUxRPmTG' " + "target='_blank'>유저 api 명세서</a>\n"
+                + "<a href='https://documenter.getpostman.com/view/20094507/VUxSr5Kw' " +"target='_blank'>질문 api 명세서</a>"
+                + "</body>\n" + "</html>";
     }
 }
