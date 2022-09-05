@@ -3,7 +3,10 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
 import styled from 'styled-components';
+<<<<<<< HEAD
 
+=======
+>>>>>>> 0c79900be3135f7e142b4a8039711dfd71931f0e
 import QuestionViewer from './QuestionViewer';
 import Vote from './Vote';
 
@@ -22,10 +25,15 @@ export default function AnswerHeader(props) {
           </select>
         </div>
       </AnswerHead>
+<<<<<<< HEAD
       {props.answerData.items.map((v) => (
         <AnswerBody key={v.answer_id}>
+=======
+      {props.answerData.map((v) => (
+        <AnswerBody key={v.id}>
+>>>>>>> 0c79900be3135f7e142b4a8039711dfd71931f0e
           <Vote />
-          <QuestionViewer mdText={v.body_markdown} owner={v.owner} />
+          <QuestionViewer mdText={v.content} owner={v.user} />
         </AnswerBody>
       ))}
     </Container>

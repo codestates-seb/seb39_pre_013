@@ -1,10 +1,7 @@
 /* eslint-disable function-paren-newline */
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { Reset } from 'styled-reset';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import { useQuery, useQueryClient } from 'react-query';
-import axios from 'axios';
 import GlobalStyle from './GlobalStyle';
 import AskQuestion from './pages/AskQuestion';
 import Header from './components/Common/Header';
@@ -12,10 +9,9 @@ import NavBar from './components/Common/NavBar';
 import QuestionsSection from './pages/QuestionsSection';
 import DetailQuestion from './pages/DetailQuestion';
 import UsersPage from './pages/UsersPage';
+import LoginPage from './pages/LoginPage';
 
 function App() {
-  const queryClient = useQueryClient();
-
   return (
     <>
       <Header />
@@ -27,12 +23,11 @@ function App() {
             <Route path="/askquestion" element={<AskQuestion />} />
             <Route path="/question/:id" element={<DetailQuestion />} />
             <Route path="/users" element={<UsersPage />} />
+            <Route path="/login" element={<LoginPage />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </main>
       </Container>
-
-      <Reset />
       <GlobalStyle />
     </>
   );

@@ -1,11 +1,39 @@
-import React from 'react';
+/* eslint-disable import/no-cycle */
+/* eslint-disable import/no-unresolved */
+/* eslint-disable function-paren-newline */
+import axios from 'axios';
+import React, { useEffect } from 'react';
+import { useQuery } from 'react-query';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Editor from '../components/AskQuestion/Editor';
 import InputTags from '../components/AskQuestion/InputTags';
 import InputTitle from '../components/AskQuestion/InputTitle';
+import Loading from '../components/Common/Loading';
 import Button from '../components/UI/Button';
+import { logoutActions } from '../store/reducers';
+import { authUser } from '../utils/auth';
 
 export default function AskQuestion() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const { data, isFetching } = useQuery('authUser', authUser, {
+    refetchOnWindowFocus: false,
+  });
+
+  console.log('inner aq :', data);
+
+  if (!data) {
+    dispatch(logoutActions());
+    navigate('/login');
+  }
+
+  if (isFetching) {
+    return <Loading />;
+  }
+
   return (
     <Container>
       <div className="title-box">
@@ -18,7 +46,6 @@ export default function AskQuestion() {
       </FormContainer>
       <div className="btn-box">
         <Button>Review your question</Button>
-        <Button mode="cancel">Daiscard draft</Button>
       </div>
     </Container>
   );
@@ -51,8 +78,4 @@ const FormContainer = styled.form`
   display: flex;
   flex-direction: column;
   gap: 10px;
-
-  ${InputTitle} {
-    margin-bottom: 10px;
-  }
 `;

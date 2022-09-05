@@ -1,14 +1,20 @@
+/* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/jsx-curly-newline */
 /* eslint-disable implicit-arrow-linebreak */
 /* eslint function-paren-newline: ["error", "never"] */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import ReactMde from 'react-mde';
 import Markdown from './Markdown';
 import 'react-mde/lib/styles/css/react-mde-all.css';
 
-export default function Editor() {
+export default React.memo((props) => {
   const [value, setValue] = useState('');
+
+  useEffect(() => {
+    // eslint-disable-next-line no-return-assign, no-param-reassign, no-unused-expressions
+    props.setEditorValue && props.setEditorValue(value);
+  }, [props, value]);
 
   return (
     <Container>
@@ -24,7 +30,7 @@ export default function Editor() {
       <Markdown text={value} />
     </Container>
   );
-}
+});
 
 const ListContainer = styled.ul`
   display: flex;

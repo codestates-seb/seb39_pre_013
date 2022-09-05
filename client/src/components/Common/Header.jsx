@@ -1,8 +1,10 @@
-import React from 'react';
-import styled from 'styled-components';
+import React, { useEffect, useState } from 'react';
+import styled, { css } from 'styled-components';
 import { BsStackOverflow } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import { IoSearchSharp } from 'react-icons/io5';
+import { useSelector } from 'react-redux';
+import { getState } from '../../store/reducers';
 
 const StyledHeader = styled.header`
   background-color: #ffa500;
@@ -73,6 +75,7 @@ const StyledHeader = styled.header`
   .profileBox {
     display: flex;
     align-items: center;
+    gap: 0.5rem;
   }
 `;
 
@@ -97,7 +100,26 @@ const LogoLink = styled(Link)`
   align-items: center;
 `;
 
+const HeaderLink = styled(Link)`
+  padding: 6px 8px;
+  color: hsl(205, 46.5%, 73.5%);
+  font-size: 13px;
+  background-color: hsl(205, 14%, 28%);
+  border-radius: 3px;
+  border: 1px solid hsl(201, 41%, 63%);
+
+  ${(props) =>
+    props.action === 'signup' &&
+    css`
+      background-color: #0964aa;
+      color: #fff;
+      border: 1px solid #0964aa;
+    `}
+`;
+
 function Header() {
+  const loginInfo = useSelector(getState);
+  console.log(loginInfo);
   return (
     <StyledHeader>
       <div className="headerWrapper">
@@ -114,9 +136,16 @@ function Header() {
             </form>
           </div>
           <div className="profileBox">
-            <a href="//" className="porfile">
-              RAK
-            </a>
+            {loginInfo.payload.loginState.userInfo ? (
+              'Login'
+            ) : (
+              <>
+                <HeaderLink to="/login">Log in</HeaderLink>
+                <HeaderLink to="/signup" action="signup">
+                  Sign up
+                </HeaderLink>
+              </>
+            )}
           </div>
         </div>
       </div>

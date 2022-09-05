@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const StyledHeader = styled.div`
   height: 140px;
@@ -52,18 +52,11 @@ const StyledHeader = styled.div`
 `;
 
 function QuestionBoxHeader() {
-  const navigate = useNavigate();
-
-  const answerQuestionsHandler = () => {
-    navigate('/askquestion');
-  };
   return (
     <StyledHeader>
       <div className="questionsHeader__top">
         <span>Top Questions</span>
-        <button type="button" onClick={answerQuestionsHandler}>
-          Ask Question
-        </button>
+        <Link to="/askquestion">Ask Question</Link>
       </div>
       <div className="questionsHeader__bottom">
         <div className="sortBox">

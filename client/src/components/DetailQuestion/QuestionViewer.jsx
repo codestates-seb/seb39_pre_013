@@ -1,8 +1,6 @@
 /* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import styled from 'styled-components';
-// eslint-disable-next-line import/no-cycle
-import { dummyData } from '../../pages/DetailQuestion';
 import Comments from './Comments';
 import Markdown from '../AskQuestion/Markdown';
 import QuestionMenu from './QuestionMenu';
@@ -18,7 +16,8 @@ export default function QuestionViewer(props) {
       {/* <Markdown text={dummyData.text} /> */}
       <Markdown text={props.mdText} />
       <TagBox>
-        {props.tags && props.tags.map((v) => <TagUI key={v}>{v}</TagUI>)}
+        {props.tags &&
+          props.tags.map((v) => <TagUI key={v.id}>{v.name}</TagUI>)}
       </TagBox>
       <QuestionMenu owner={props.owner} />
       {/* <Comments /> */}

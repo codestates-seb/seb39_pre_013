@@ -8,6 +8,7 @@ const Bar = styled.nav`
   width: 165px;
   position: relative;
   border-right: 1px solid hsl(210, 4.5%, 30.5%);
+  height: 90vh;
 
   a {
     color: white;
