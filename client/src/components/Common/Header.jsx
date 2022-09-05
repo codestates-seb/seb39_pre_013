@@ -136,7 +136,7 @@ function Header() {
             </form>
           </div>
           <div className="profileBox">
-            {loginInfo.payload.loginState.userInfo ? (
+            {loginInfo.payload.loginState.userInfo.id ? (
               'Login'
             ) : (
               <>

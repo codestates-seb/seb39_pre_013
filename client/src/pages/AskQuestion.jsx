@@ -1,44 +1,14 @@
 /* eslint-disable import/no-cycle */
 /* eslint-disable import/no-unresolved */
 /* eslint-disable function-paren-newline */
-import axios from 'axios';
 import React, { useEffect } from 'react';
-import { useQuery } from 'react-query';
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Editor from '../components/AskQuestion/Editor';
 import InputTags from '../components/AskQuestion/InputTags';
 import InputTitle from '../components/AskQuestion/InputTitle';
-import Loading from '../components/Common/Loading';
 import Button from '../components/UI/Button';
-import { logoutActions } from '../store/reducers';
-import { authUser } from '../utils/auth';
-import axiosInstance from '../utils/tokenAuth';
 
 export default function AskQuestion() {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  const { data, isFetching } = useQuery(
-    'authUser',
-    axiosInstance.get('/api/v1/users/auth'),
-    {
-      refetchOnWindowFocus: false,
-    },
-  );
-
-  console.log('inner aq :', data);
-
-  if (!data) {
-    dispatch(logoutActions());
-    navigate('/login');
-  }
-
-  if (isFetching) {
-    return <Loading />;
-  }
-
   return (
     <Container>
       <div className="title-box">

@@ -6,9 +6,10 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import ClipLoader from 'react-spinners/ClipLoader';
+import { useDispatch, useSelector } from 'react-redux';
 import Editor from '../components/AskQuestion/Editor';
 import Loading from '../components/Common/Loading';
 import Answers from '../components/DetailQuestion/Answers';
@@ -16,6 +17,9 @@ import Comments from '../components/DetailQuestion/Comments';
 import QuestionViewer from '../components/DetailQuestion/QuestionViewer';
 import Vote from '../components/DetailQuestion/Vote';
 import Button from '../components/UI/Button';
+import { getState, logoutActions } from '../store/reducers';
+import { authUser, removeToken } from '../utils/auth';
+import { persistor } from '..';
 
 /**
  *
@@ -27,6 +31,10 @@ export default function DetailQuestion() {
   const [editorValue, setEditorValue] = useState(undefined);
   const params = useParams();
   const queryClient = useQueryClient();
+  const userInfo = useSelector(getState);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const getDetailQuestion = async () => {
     const { data } = await axios.get(`/api/v1/questions/${params.id}`, {
       withCredentials: true,
@@ -45,16 +53,34 @@ export default function DetailQuestion() {
     axios.post('/api/v1/answers', payload, { withCredentials: true }),
   );
 
-  const AddAnswerHandler = () => {
-    postAnswer.mutate({
-      questionId: params.id,
-      userId: 1,
-      content: editorValue,
-    });
-    setEditorValue('');
+  const { refetch } = useQuery(['auth'], authUser, {
+    refetchOnWindowFocus: false,
+    enabled: false,
+    refetchOnMount: false,
+  });
+
+  const errorHandler = () => {
+    dispatch(logoutActions());
+    removeToken();
+    persistor.pause();
+    persistor.flush().then(() => persistor.purge());
+    navigate('/login');
   };
 
-  console.log(`id : ${params.id} = `, data);
+  const AddAnswerHandler = async () => {
+    const refetchStatus = await refetch();
+    if (refetchStatus.status === 'error') {
+      errorHandler();
+    } else {
+      postAnswer.mutate({
+        questionId: params.id,
+        userId: userInfo.payload.loginState.userInfo.id,
+        content: editorValue,
+      });
+      setEditorValue('');
+    }
+  };
+
   if (isFetching) {
     return <Loading />;
   }

@@ -22,12 +22,12 @@ export const setToken = (accessToken, refreshToken) => {
   }
 };
 
-export const removeToken = () => {
-  cookies.remove('access_token');
-  cookies.remove('refresh_token');
-  axiosInstance.defaults.headers.access_token = null;
-  axiosInstance.defaults.headers.refresh_token = null;
-};
+// export const removeToken = () => {
+//   cookies.remove('access_token');
+//   cookies.remove('refresh_token');
+//   axiosInstance.defaults.headers.access_token = null;
+//   axiosInstance.defaults.headers.refresh_token = null;
+// };
 
 axiosInstance.interceptors.request.use(async (config) => {
   const accessToken = getCookie('access_token');

@@ -62,4 +62,6 @@ const AnswerHead = styled.div`
 
 const AnswerBody = styled.div`
   display: flex;
+  border-bottom: 1px solid hsl(210, 4%, 26%);
+  padding: 1rem 0;
 `;

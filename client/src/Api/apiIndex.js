@@ -8,13 +8,13 @@ export const login = async (payload) => {
         const response = await axios.post('/api/v1/users/login', payload, {withCredentials: true})
             .then((res) => {
                 if(res.status === 200) {
-                    setCookie('accessToken', res.headers.accesstoken);
-                    setCookie('refreshToken', res.headers.refreshtoken);
+                    console.log(res.headers)
+                    setCookie('accessToken', res.headers.access_token);
+                    setCookie('refreshToken', res.headers.refresh_token);
                 }
-                return payload;
+                return res;
             });
-            console.log('inner API :', response);
-            return response.email;
+            return response;
     }catch(err) {
         throw Error(err.response.data.message);
     } 

@@ -3,45 +3,31 @@
 /* eslint-disable import/prefer-default-export */
 
 import axios from "axios";
+import { Cookies } from "react-cookie";
 import { deleteCookie, getCookie, setCookie } from "./cookies";
 import { persistor } from "../index";
 
+const cookies = new Cookies();
+
 export const authUser = async () => {
-    let data;
     const accesstoken = { access_token: getCookie('accessToken') };
     const refreshtoken = { refresh_token: getCookie('refreshToken') };
     
-    if(!accesstoken.access_token) {
+    if(!accesstoken || !refreshtoken) {
+        console.log('not found token')
         return false;
     }
 
-    const accessAuth = await axios.get('/api/v1/users/auth',
-        { headers: accesstoken },
-        {
-          withCredentials: true,
-        });
-        console.log('ac :', accessAuth)
-    if(!accessAuth.data.id) {
-        const refreshAuth = await axios.get('/api/v1/users/refresh',
-        { headers: refreshtoken },
-        {
-            withCredentials: true
-        }).then(res => {
-            console.log('res :', res);
-            if(res.status === 200) {
-                setCookie('accessToken', res.headers.accesstoken);
-                setCookie('refreshToken', res.headers.refreshtoken);
-                return res.data;
-            }
-        }).catch(async err => {
-            deleteCookie('accessToken');
-            deleteCookie('refreshToken');
+    const res = await axios.get('/api/v1/users/auth', {headers: {
+        access_token: accesstoken.access_token,
+        refresh_token: refreshtoken.refresh_token
+    }}, {withCredentials: true});
+    console.log('data :', res)
+    return res;
+}
 
-            await persistor.purge();
-            console.log('err')
-            return false;
-        });
-    }
-        return accessAuth.data;
-    
+export const removeToken = () => {
+    cookies.remove('access_token');
+    cookies.remove('refresh_token');
 };
+

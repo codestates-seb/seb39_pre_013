@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 /* eslint-disable function-paren-newline */
 import React from 'react';
 import styled from 'styled-components';
@@ -14,7 +15,6 @@ const StyledMain = styled.div`
   box-sizing: border-box;
   width: 100%;
   height: 100%;
-  padding: 24px;
 
   .mainContentsBox {
     width: 100%;
@@ -50,6 +50,7 @@ function QuestionsSection() {
     { refetchOnWindowFocus: false },
   );
 
+  console.log(data);
   if (isFetching) {
     return <Loading />;
   }
@@ -68,6 +69,9 @@ function QuestionsSection() {
               createDate={v.creation_date}
               views={v.view}
               voteCount={v.vote}
+              createdAt={v.createdAt}
+              modifiedAt={v.modifiedAt}
+              user={v.user}
             />
           ))}
         </div>

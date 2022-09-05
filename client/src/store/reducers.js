@@ -24,11 +24,6 @@ export const loginSlice = createSlice({
             state.userInfo;
         }
     },
-    extraReducers: (builder) => {
-        builder.addCase(PURGE, (state) => {
-            customEntityAdapter.removeAll(state);
-        });
-    }
 });
 
 export const {loginActions, logoutActions, getState} = loginSlice.actions;

@@ -21,7 +21,8 @@ export default function LoginPage() {
 
   const loginAction = useMutation('login', login, {
     onSuccess: (data) => {
-      dispatch(loginActions(data));
+      console.log('login data :', data);
+      dispatch(loginActions(data.data.data));
       navigate(-1);
     },
   });

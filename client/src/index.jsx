@@ -10,7 +10,16 @@ import { persistStore } from 'redux-persist';
 import App from './App';
 import store from './store/index';
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      retry: false,
+      refetchOnMount: false,
+      staleTime: 1000 * 60 * 60 * 24,
+    },
+  },
+});
 export const persistor = persistStore(store);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
