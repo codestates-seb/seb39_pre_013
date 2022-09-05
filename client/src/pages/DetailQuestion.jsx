@@ -54,31 +54,8 @@ export default function DetailQuestion() {
     setEditorValue('');
   };
 
-<<<<<<< HEAD
-  const result = useQueries([
-    {
-      queryKey: ['getDetaikQuestion'],
-      queryFn: () => getDetailQuestion(),
-      refetchOnWindowFocus: false,
-    },
-    {
-      queryKey: ['getAnswers'],
-      queryFn: () => getAnswers(),
-      refetchOnWindowFocus: false,
-    },
-    {
-      queryKey: ['getQuestionsComments'],
-      queryFn: () => getQuestionsComments(),
-      refetchOnWindowFocus: false,
-    },
-  ]);
-
-  console.log(`id : ${params.id} = `, result[2]);
-  if (result[0].isFetching || result[1].isFetching || result[2].isFetching) {
-=======
   console.log(`id : ${params.id} = `, data);
   if (isFetching) {
->>>>>>> 0c79900be3135f7e142b4a8039711dfd71931f0e
     return <Loading />;
   }
 
@@ -110,16 +87,11 @@ export default function DetailQuestion() {
             owner={data.data.user}
           />
         </QuestionBody>
-        <Comments commnetData={result[2].data.items} />
+        {/* <Comments commnetData={result[2].data.items} /> */}
       </div>
       <AnswerContainer>
-<<<<<<< HEAD
-        {result[1].data.items.length !== 0 && (
-          <Answers answerData={result[1].data} />
-=======
         {data.data.answers.length !== 0 && (
           <Answers answerData={data.data.answers} />
->>>>>>> 0c79900be3135f7e142b4a8039711dfd71931f0e
         )}
       </AnswerContainer>
       <AddAnswers>
@@ -150,12 +122,10 @@ const QuestionHeader = styled.div`
   flex-direction: column;
   align-items: flex-start;
   padding-bottom: 1rem;
-
   h1 {
     font-size: 2rem;
     margin-bottom: 0.8rem;
   }
-
   > div {
     display: flex;
     flex-direction: row;

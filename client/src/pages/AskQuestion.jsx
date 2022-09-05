@@ -14,14 +14,19 @@ import Loading from '../components/Common/Loading';
 import Button from '../components/UI/Button';
 import { logoutActions } from '../store/reducers';
 import { authUser } from '../utils/auth';
+import axiosInstance from '../utils/tokenAuth';
 
 export default function AskQuestion() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { data, isFetching } = useQuery('authUser', authUser, {
-    refetchOnWindowFocus: false,
-  });
+  const { data, isFetching } = useQuery(
+    'authUser',
+    axiosInstance.get('/api/v1/users/auth'),
+    {
+      refetchOnWindowFocus: false,
+    },
+  );
 
   console.log('inner aq :', data);
 
