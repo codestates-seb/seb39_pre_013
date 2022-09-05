@@ -15,20 +15,9 @@ export default function UserInfo(props) {
           <img src={props.info.profile_image} alt="profileImg" />
         </a>
         <div>
-          <a href="#">{props.info.display_name}</a>
+          <a href="#">{props.info.nickname}</a>
           <ScoreBox>
-            <span>{props.info.reputation}</span>
-            {/* <span>
-              <VscCircleFilled /> 4
-            </span>
-            <span>
-              <VscCircleFilled />
-              24
-            </span>
-            <span>
-              <VscCircleFilled />
-              27
-            </span> */}
+            <span>{props.info.reputation || 0}</span>
           </ScoreBox>
         </div>
       </ProfileBox>

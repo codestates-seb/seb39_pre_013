@@ -10,10 +10,10 @@ import 'react-mde/lib/styles/css/react-mde-all.css';
 
 export default React.memo((props) => {
   const [value, setValue] = useState('');
-  console.log('value :', value, typeof value);
+
   useEffect(() => {
-    // eslint-disable-next-line no-return-assign, no-param-reassign
-    props.setEditorValue(value);
+    // eslint-disable-next-line no-return-assign, no-param-reassign, no-unused-expressions
+    props.setEditorValue && props.setEditorValue(value);
   }, [props, value]);
 
   return (

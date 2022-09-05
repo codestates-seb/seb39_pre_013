@@ -5,57 +5,16 @@
 /* eslint-disable function-paren-newline */
 import axios from 'axios';
 import React, { useState } from 'react';
-import { useMutation, useQueries, useQuery, useQueryClient } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import ClipLoader from 'react-spinners/ClipLoader';
 import Editor from '../components/AskQuestion/Editor';
 import Loading from '../components/Common/Loading';
 import Answers from '../components/DetailQuestion/Answers';
 import QuestionViewer from '../components/DetailQuestion/QuestionViewer';
 import Vote from '../components/DetailQuestion/Vote';
 import Button from '../components/UI/Button';
-
-export const dummyData = {
-  title: 'Sorted function in Python dictionary',
-  asked: 'today',
-  modified: 'today',
-  viewed: 40,
-  text: `A paragraph with *emphasis* and **strong importance**.
-
-  > A block quote with ~strikethrough~ and a URL: https://reactjs.org.
-  
-  A table:
-  
-  | a | b |
-  | - | - |
-
-  ~~~js
-  console.log('It works!')
-  ~~~
-
-  ~~~jsx
-  const useDialog = () => {
-    const dispatch = useAppDispatch();
-  
-    // 리액트 컴포넌트에서 훅을 사용해서 openDialog 함수를 호출했다면
-    // 썽크(thunk) 액션 생성자 함수를 통해서 액션을 디스패치하게 됩니다.
-    const openDialog = async (state: DialogContents): Promise => {
-      const { payload } = await dispatch(confirmationThunkActions.open(state));
-  
-      return payload
-    };
-  
-    // ...
-    
-    return {
-      openDialog,
-      ...
-    }
-  };
-~~~
-  `,
-  tag: ['python', 'dictionary'],
-};
 
 /**
  *
@@ -68,102 +27,69 @@ export default function DetailQuestion() {
   const params = useParams();
   const queryClient = useQueryClient();
   const getDetailQuestion = async () => {
-    const { data } = await axios.get(
-      `https://api.stackexchange.com/2.3/questions/${params.id}?page=1&pagesize=1&order=desc&sort=activity&site=stackoverflow&filter=!*MZqiH2nLUzaa-7j&key=xvUIc44g5zNOfh7F5nXJig((`,
-    );
+    const { data } = await axios.get(`/api/v1/questions/${params.id}`, {
+      withCredentials: true,
+    });
 
     return data;
   };
 
-  const getAnswers = async () => {
-    const { data } = await axios.get(
-      `https://api.stackexchange.com/2.3/questions/${params.id}/answers?order=desc&sort=activity&site=stackoverflow&filter=!6VvPDzQn3Qm62&key=xvUIc44g5zNOfh7F5nXJig((`,
-    );
+  const { data, isFetching } = useQuery(
+    'getDetailQuestion',
+    getDetailQuestion,
+    { refetchOnWindowFocus: false },
+  );
 
-    return data;
-  };
-
-  const getQuestionsComments = async () => {
-    const { data } = await axios.get(
-      `https://api.stackexchange.com/2.3/questions/${params.id}/comments?order=desc&sort=creation&site=stackoverflow&filter=!nKzQURB(-t&key=xvUIc44g5zNOfh7F5nXJig((`,
-    );
-
-    return data;
-  };
-
-  const result = useQueries([
-    {
-      queryKey: ['getDetaikQuestion'],
-      queryFn: () => getDetailQuestion(),
-      refetchOnWindowFocus: false,
-    },
-    {
-      queryKey: ['getAnswers'],
-      queryFn: () => getAnswers(),
-      refetchOnWindowFocus: false,
-    },
-    {
-      queryKey: ['getQuestionsComments'],
-      queryFn: () => getQuestionsComments(),
-      refetchOnWindowFocus: false,
-    },
-  ]);
-
-  const postAddAnswer = (payload) =>
-    axios.post('http://pre13.duckdns.org:81/api/v1/answers', payload);
-
-  const {
-    mutate: postAnswer,
-    isLoading,
-    isError,
-    error,
-  } = useMutation(postAddAnswer, {
-    onSuccess: () => queryClient.invalidateQueries(),
-  });
+  const postAnswer = useMutation((payload) =>
+    axios.post('/api/v1/answers', payload, { withCredentials: true }),
+  );
 
   const AddAnswerHandler = () => {
-    const payload = { questionId: params.id, content: editorValue, userId: 0 };
-    postAnswer(payload);
+    postAnswer.mutate({
+      questionId: params.id,
+      userId: 1,
+      content: editorValue,
+    });
+    setEditorValue('');
   };
 
-  console.log(`id : ${params.id} = `, result);
-  if (result[0].isFetching || result[1].isFetching || result[2].isFetching) {
+  console.log(`id : ${params.id} = `, data);
+  if (isFetching) {
     return <Loading />;
   }
 
-  console.log(editorValue);
   return (
     <Container>
       <div>
         <QuestionHeader>
-          <h1>{result[0].data.items[0].title}</h1>
+          <h1>{data.data.title}</h1>
           <div>
             <SubText>
               <span>Asked</span>
-              {dummyData.asked}
+              today
             </SubText>
             <SubText>
               <span>Modified</span>
-              {dummyData.modified}
+              {data.data.modifiedAt}
             </SubText>
             <SubText>
               <span>Viewed</span>
-              {result[0].data.items[0].view_count} times
+              {data.data.view} times
             </SubText>
           </div>
         </QuestionHeader>
         <QuestionBody>
           <Vote />
           <QuestionViewer
-            mdText={result[0].data.items[0].body_markdown}
-            tags={result[0].data.items[0].tags}
-            owner={result[0].data.items[0].owner}
+            mdText={data.data.content}
+            tags={data.data.questionTags}
+            owner={data.data.user}
           />
         </QuestionBody>
       </div>
       <AnswerContainer>
-        {result[1].data.items.length !== 0 && (
-          <Answers answerData={result[1].data.items} />
+        {data.data.answers.length !== 0 && (
+          <Answers answerData={data.data.answers} />
         )}
       </AnswerContainer>
       <AddAnswers>
@@ -171,7 +97,13 @@ export default function DetailQuestion() {
         <Editor setEditorValue={setEditorValue} />
       </AddAnswers>
       <Button onClick={AddAnswerHandler}>
-        {isLoading ? 'Loading...' : 'Post Your Answer'}
+        {postAnswer.isLoading ? (
+          <>
+            <ClipLoader size={14} color="#fff" /> Post...
+          </>
+        ) : (
+          'Post Your Answer'
+        )}
       </Button>
     </Container>
   );
@@ -215,4 +147,11 @@ const QuestionBody = styled.section`
 
 const AnswerContainer = styled.div``;
 
-const AddAnswers = styled.div``;
+const AddAnswers = styled.div`
+  margin-top: 20px;
+  span {
+    font-size: 18px;
+    display: block;
+    margin-bottom: 20px;
+  }
+`;

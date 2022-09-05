@@ -47,18 +47,16 @@ function QuestionBlock(props) {
   return (
     <QuestionBlockDiv>
       <div className="questionsList__left">
-        <div>{props.score}</div>
-        <div>{props.answers}</div>
+        <div>{props.voteCount}</div>
+        <div>{props.answers.length}</div>
         <div>{props.views}</div>
       </div>
       <div className="questionsList__right">
         <Link to={`question/${props.id}`}>{props.title}</Link>
         <div className="tagBox">
           {props.tags.map((v) => (
-            <div key={v}>{v}</div>
+            <div key={v.id}>{v.name}</div>
           ))}
-          {/* <div>tag1</div>
-          <div>tag2</div> */}
         </div>
         <div>유저정보/작성시간/메타정보</div>
       </div>

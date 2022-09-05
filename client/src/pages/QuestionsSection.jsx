@@ -37,9 +37,9 @@ const StyledNavdiv = styled.div`
 `;
 function QuestionsSection() {
   const getQuestions = async () => {
-    const { data } = await axios.get(
-      'https://api.stackexchange.com/2.3/questions?page=1&pagesize=10&order=desc&sort=activity&site=stackoverflow&filter=!9Tk7U8l6-&key=xvUIc44g5zNOfh7F5nXJig((',
-    );
+    const { data } = await axios.get('/api/v1/questions?page=1&size=10', {
+      withCredentials: true,
+    });
 
     return data;
   };
@@ -53,22 +53,21 @@ function QuestionsSection() {
   if (isFetching) {
     return <Loading />;
   }
-
   return (
     <StyledMain>
       <div className="mainContentsBox">
         <div className="questionsBox">
           <QuestionBoxHeader />
-          {data.items.map((v) => (
+          {data.data.map((v) => (
             <QuestionBlock
-              key={v.question_id}
-              id={v.question_id}
-              answers={v.answer_count}
+              key={v.id}
+              id={v.id}
+              answers={v.answers}
               title={v.title}
-              tags={v.tags}
+              tags={v.questionTags}
               createDate={v.creation_date}
-              views={v.view_count}
-              voteCount={v.score}
+              views={v.view}
+              voteCount={v.vote}
             />
           ))}
         </div>
