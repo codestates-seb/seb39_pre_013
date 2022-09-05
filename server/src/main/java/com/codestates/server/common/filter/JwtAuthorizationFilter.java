@@ -46,11 +46,11 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
         String username = null;
         try {
             String jwtToken = jwtHeader.replace("Bearer ", "");
-
             username = JWT.require(Algorithm.HMAC512(JWT_KEY)).build().verify(jwtToken).getClaim("sub").asString();
         }catch (com.auth0.jwt.exceptions.TokenExpiredException e){
             response.setHeader("access_token","token expired");
             response.setHeader("refresh_token", refreshHeader);
+            response.setStatus(403);
             //리다이렉트 시키자
             new ObjectMapper().writeValue(response.getOutputStream(), new HashMap<String,String>(){{put("msg","accessToken이 만료되었습니다.");}});
             log.info(e.getMessage());

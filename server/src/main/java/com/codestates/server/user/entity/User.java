@@ -39,7 +39,7 @@ public class User extends BaseEntity {
     @JsonIgnore
     private List<Question> questions = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JsonIgnore
     private List<UserTag> userTags = new ArrayList<>();
 

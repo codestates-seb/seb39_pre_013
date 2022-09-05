@@ -2,9 +2,14 @@ package com.codestates.server.common.filter;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.codestates.server.common.dto.SingleResponseDto;
 import com.codestates.server.common.oauth.PrincipalDetails;
+import com.codestates.server.user.dto.UserDto;
 import com.codestates.server.user.entity.User;
+import com.codestates.server.user.mapper.UserMapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,8 +24,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 
 @Slf4j
@@ -28,7 +31,7 @@ import java.util.Map;
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private final AuthenticationManager authenticationManager;
     private final String JWT_KEY;
-
+    private final UserMapper userMapper;
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         log.info("로그인 요청");
@@ -39,6 +42,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             System.out.println(user.getPassword());
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword());
             Authentication authentication = authenticationManager.authenticate(authenticationToken);
+
+
             return authentication;
         } catch (IOException e) {
             e.printStackTrace();
@@ -51,11 +56,11 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         log.info("인증에 성공하였습니다.");
         PrincipalDetails principalDetails = (PrincipalDetails) authResult.getPrincipal();
         log.info("해당유저는"+ principalDetails.getUsername());
-        System.out.println(JWT_KEY);
+
         String accessToken = createAccessToken(principalDetails, 30);
         String refreshToken = createRefreshToken(principalDetails, 1);
 
-        returnResponseEntity(response, accessToken, refreshToken);
+        returnResponseEntity(response, accessToken, refreshToken,principalDetails);
     }
 
     private String createAccessToken(PrincipalDetails principalDetails, int x) {
@@ -77,13 +82,16 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .sign(Algorithm.HMAC512(JWT_KEY));
         return accessToken;
     }
-    private void returnResponseEntity(HttpServletResponse response, String accessToken, String refreshToken) throws IOException {
+    private void returnResponseEntity(HttpServletResponse response, String accessToken, String refreshToken,PrincipalDetails principalDetails) throws IOException {
         response.addHeader("accessToken","Bearer " + accessToken);
         response.addHeader("refreshToken", "Bearer " + refreshToken);
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-        Map<String, Object> body = new LinkedHashMap<>();
-        body.put("msg", "로그인이 완료되었습니다.");
-        new ObjectMapper().writeValue(response.getOutputStream(),body);
+        UserDto userDto = userMapper.userToUserDto(principalDetails.getUser());
+
+        new ObjectMapper().registerModule(new JavaTimeModule())//datetime맞추기
+                .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)//직렬화 예쁘게
+                .writeValue(response.getOutputStream(),new SingleResponseDto<>(userDto));
+
     }
 }

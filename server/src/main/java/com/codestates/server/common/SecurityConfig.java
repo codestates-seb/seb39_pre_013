@@ -2,6 +2,7 @@ package com.codestates.server.common;
 
 import com.codestates.server.common.filter.JwtAuthenticationFilter;
 import com.codestates.server.common.filter.JwtAuthorizationFilter;
+import com.codestates.server.user.mapper.UserMapper;
 import com.codestates.server.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -33,7 +34,7 @@ public class SecurityConfig {
     private String JWT_KEY;
     private final CorsFilter corsFilter;
     private final UserRepository userRepository;
-
+    private final UserMapper userMapper;
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable();//stateless한 서버에는 인증정보를 저장하지않으므로 csrf코드가 불필요하다.
@@ -68,7 +69,7 @@ public class SecurityConfig {
         }
 
         private JwtAuthenticationFilter getJwtAuthenticationFilter(AuthenticationManager authenticationManager) {
-            JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager,JWT_KEY);
+            JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager,JWT_KEY,userMapper);
             jwtAuthenticationFilter.setFilterProcessesUrl("/api/v1/users/login");
             return jwtAuthenticationFilter;
         }

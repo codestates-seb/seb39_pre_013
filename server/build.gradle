@@ -47,6 +47,10 @@ dependencies {
 	implementation 'mysql:mysql-connector-java'
 	runtimeOnly 'mysql:mysql-connector-java'
 
+	//dateTime 직렬화이거 안하면 filter단에서 datetime형식이 보내지질 않음
+	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.3'
+
+
 }
 
 tasks.named('test') {
