@@ -9,12 +9,16 @@ export const dummyText =
  *
  * @Comment - 데이터 양에 따라 map으로 반복 예정
  */
-export default function Comments() {
+export default function Comments(props) {
   return (
     <Container>
+      {
+        // props.commentData.map(v => {
+        // })
+      }
+      {/* <Comment comment={dummyText} />
       <Comment comment={dummyText} />
-      <Comment comment={dummyText} />
-      <Comment comment={dummyText} />
+      <Comment comment={dummyText} /> */}
     </Container>
   );
 }

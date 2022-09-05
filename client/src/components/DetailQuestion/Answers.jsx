@@ -3,7 +3,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
 import styled from 'styled-components';
-import { dummyData } from '../../pages/DetailQuestion';
+
 import QuestionViewer from './QuestionViewer';
 import Vote from './Vote';
 
@@ -22,8 +22,8 @@ export default function AnswerHeader(props) {
           </select>
         </div>
       </AnswerHead>
-      {props.answerData.map((v) => (
-        <AnswerBody>
+      {props.answerData.items.map((v) => (
+        <AnswerBody key={v.answer_id}>
           <Vote />
           <QuestionViewer mdText={v.body_markdown} owner={v.owner} />
         </AnswerBody>

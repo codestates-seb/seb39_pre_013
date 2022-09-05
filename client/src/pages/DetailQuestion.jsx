@@ -10,6 +10,7 @@ import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import Loading from '../components/Common/Loading';
 import Answers from '../components/DetailQuestion/Answers';
+import Comments from '../components/DetailQuestion/Comments';
 import QuestionViewer from '../components/DetailQuestion/QuestionViewer';
 import Vote from '../components/DetailQuestion/Vote';
 
@@ -105,11 +106,7 @@ export default function DetailQuestion() {
     },
   ]);
 
-<<<<<<< HEAD
-
-=======
-  console.log(`id : ${params.id} = `, result);
->>>>>>> 793f708114b2695d360ddd920911b58c03465ae6
+  console.log(`id : ${params.id} = `, result[2]);
   if (result[0].isFetching || result[1].isFetching || result[2].isFetching) {
     return <Loading />;
   }
@@ -142,20 +139,17 @@ export default function DetailQuestion() {
             owner={result[0].data.items[0].owner}
           />
         </QuestionBody>
+        <Comments commnetData={result[2].data.items} />
       </div>
       <AnswerContainer>
         {result[1].data.items.length !== 0 && (
-          <Answers answerData={result[1].data.items} />
+          <Answers answerData={result[1].data} />
         )}
       </AnswerContainer>
     </Container>
   );
 }
 
-// eslint-disable-next-line no-lone-blocks
-{
-  /* <Answers answerData={result[1].data.items} /> */
-}
 const Container = styled.article`
   padding: 24px;
   background-color: hsl(0, 0%, 17.5%);
