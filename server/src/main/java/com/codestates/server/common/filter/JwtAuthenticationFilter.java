@@ -74,8 +74,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     }
     private String createRefreshToken(PrincipalDetails principalDetails, int x) {
         String accessToken = JWT.create()
-                .withSubject("refresh")
-                .withClaim("email",principalDetails.getUsername())
+                .withSubject(principalDetails.getUsername())
+                .withClaim("type","refresh")
                 .withExpiresAt(new Date(System.currentTimeMillis() + (60*1000* x)))
                 .withClaim("id", principalDetails.getUser().getId())
                 .withClaim("nickname", principalDetails.getUser().getNickname())
@@ -83,8 +83,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         return accessToken;
     }
     private void returnResponseEntity(HttpServletResponse response, String accessToken, String refreshToken,PrincipalDetails principalDetails) throws IOException {
-        response.addHeader("accessToken","Bearer " + accessToken);
-        response.addHeader("refreshToken", "Bearer " + refreshToken);
+        response.addHeader("access_Token","Bearer " + accessToken);
+        response.addHeader("refresh_Token", "Bearer " + refreshToken);
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         UserDto userDto = userMapper.userToUserDto(principalDetails.getUser());

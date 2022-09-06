@@ -27,6 +27,6 @@ logging:
         orm:
           jpa: DEBUG
 server:
-  port: 8081
+  port: 9090
 
 

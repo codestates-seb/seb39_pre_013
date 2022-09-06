@@ -1,7 +1,7 @@
 package com.codestates.server.user.mapper;
 
-import com.codestates.server.tag.entity.Tag;
 import com.codestates.server.user.dto.UserDto;
+import com.codestates.server.tag.entity.Tag;
 import com.codestates.server.user.dto.UserRequestDto;
 import com.codestates.server.user.dto.UserTagDto;
 import com.codestates.server.user.entity.User;

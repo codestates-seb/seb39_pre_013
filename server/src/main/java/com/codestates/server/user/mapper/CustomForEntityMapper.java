@@ -4,10 +4,10 @@ import com.codestates.server.answer.dto.AnswerDto;
 import com.codestates.server.answer.entity.Answer;
 import com.codestates.server.question.dto.QuestionDto;
 import com.codestates.server.question.entity.Question;
+import com.codestates.server.user.entity.UserTag;
 import com.codestates.server.subscribe.dto.SubscribeDto;
 import com.codestates.server.subscribe.entity.Subscribe;
 import com.codestates.server.user.dto.UserTagDto;
-import com.codestates.server.user.entity.UserTag;
 import org.mapstruct.*;
 
 import java.util.List;

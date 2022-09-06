@@ -1,14 +1,17 @@
 package com.codestates.server.subscribe.controller;
 
+import com.codestates.server.common.dto.SingleResponseDto;
 import com.codestates.server.subscribe.entity.Subscribe;
 import com.codestates.server.subscribe.repository.SubscribeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -21,9 +24,11 @@ public class SubscribeController {
         Subscribe subscribe = subscribeRepository.findById(id).orElseThrow();
         String questionTitle = subscribe.getQuestion().getTitle();
         String answer = subscribe.getAnswer().getContent();
-        Map<String,String> map = new HashMap<>(){{put("questionTitle",questionTitle);
-            put("answer",answer);
-        }};
-        return new ResponseEntity<>(map, HttpStatus.OK);
+
+        return new ResponseEntity<>(
+                new SingleResponseDto<>(new HashMap<>() {{
+                    put("questionTitle", questionTitle);
+                    put("answer", answer);
+                }}), HttpStatus.OK);
     }
 }

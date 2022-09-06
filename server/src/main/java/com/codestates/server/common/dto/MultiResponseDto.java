@@ -6,6 +6,9 @@ import org.springframework.data.domain.Page;
 
 import java.util.List;
 
+// page를 나타내기 위한용도
+// 자바
+
 @Getter
 public class MultiResponseDto<T> {
     private final List<T> data;
@@ -28,3 +31,4 @@ public class MultiResponseDto<T> {
         private int totalPages;
     }
 }
+

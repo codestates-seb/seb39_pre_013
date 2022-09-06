@@ -36,16 +36,16 @@ public class Question extends BaseEntity {
 
     private Integer vote;
 
-    @OneToMany(mappedBy = "question")
+    @OneToMany(mappedBy = "question",fetch = FetchType.LAZY)
     private List<Subscribe> subscribes = new ArrayList<>();
 
-    @OneToMany(mappedBy = "question")
+    @OneToMany(mappedBy = "question",fetch = FetchType.LAZY)
     private List<QuestionTag> questionTags = new ArrayList<>();
 
-    @OneToMany(mappedBy = "question")
+    @OneToMany(mappedBy = "question",fetch = FetchType.LAZY)
     private List<Comment> comments = new ArrayList<>();
 
-    @OneToMany(mappedBy = "question")
+    @OneToMany(mappedBy = "question",fetch = FetchType.LAZY)
     private List<Answer> answers = new ArrayList<>();
 
 

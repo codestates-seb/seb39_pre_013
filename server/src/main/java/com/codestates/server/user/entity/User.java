@@ -86,8 +86,8 @@ public class User extends BaseEntity {
         this.roles = roles;
         this.questions = questions==null? new ArrayList<>():questions;
         this.userTags = userTags==null? new ArrayList<>():userTags;
-        this.answers = answers==null? new ArrayList<>():answers;
-        this.subscribes = subscribes;
+        this.answers = answers==null? new ArrayList<>():answers;//빌더시엔 꼭넣어야한다.
+        this.subscribes = subscribes==null? new ArrayList<>():subscribes;
     }
 
     public List<String> getRoleList() {

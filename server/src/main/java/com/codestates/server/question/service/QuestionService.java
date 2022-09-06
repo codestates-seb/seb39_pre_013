@@ -8,10 +8,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Service
 @AllArgsConstructor
+@Transactional
 public class QuestionService {
     private final QuestionRepository questionRepository;
     private final UserRepository userRepository;
@@ -23,7 +25,6 @@ public class QuestionService {
 
         Question savedQuestion = questionRepository.save(question);
 
-
         return savedQuestion;
     }
 
@@ -32,7 +33,7 @@ public class QuestionService {
         Optional.ofNullable(question.getTitle()).ifPresent(title -> foundQuestion.setTitle(title));
         Optional.ofNullable(question.getContent()).ifPresent(contents -> foundQuestion.setContent(contents));
 //        Optional.ofNullable(question.getTag()).ifPresent(tag -> foundQuestion.setTag(tag));
-        return questionRepository.save(foundQuestion);
+        return foundQuestion;
     }
 
     public Question findQuestion(long questionId) {

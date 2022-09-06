@@ -1,6 +1,5 @@
 package com.codestates.server.tag.dto;
 
-import com.codestates.server.user.dto.UserDto;
 import com.codestates.server.user.dto.UserTagDto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
