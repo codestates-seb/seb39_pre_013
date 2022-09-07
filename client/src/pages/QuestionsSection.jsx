@@ -7,6 +7,7 @@ import { useQuery } from 'react-query';
 import QuestionBoxHeader from '../components/Main/QuestionBoxHeader';
 import QuestionBlock from '../components/Main/QuestionBlock';
 import Loading from '../components/Common/Loading';
+import { getQuestions } from '../Api/apiIndex';
 
 const StyledMain = styled.div`
   background-color: #2d2d2d;
@@ -36,14 +37,6 @@ const StyledNavdiv = styled.div`
   cursor: pointer;
 `;
 function QuestionsSection() {
-  const getQuestions = async () => {
-    const { data } = await axios.get('/api/v1/questions?page=1&size=10', {
-      withCredentials: true,
-    });
-
-    return data;
-  };
-
   const { status, data, error, isFetching } = useQuery(
     'getQuestions',
     getQuestions,

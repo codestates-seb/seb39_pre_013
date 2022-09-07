@@ -20,3 +20,10 @@ export const login = async (payload) => {
     } 
 };
 
+export const getQuestions = async () => {
+    const { data } = await axios.get('/api/v1/questions?page=1&size=10', {
+        withCredentials: true,
+    });
+
+    return data;
+};
